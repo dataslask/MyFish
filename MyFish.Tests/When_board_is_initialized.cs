@@ -53,6 +53,11 @@ namespace MyFish.Tests
             Board.WhitePieces.Should().HaveCount(16);
         }
 
+        [Test]
+        public void White_pawn_at_d1_may_only_move_to_d2_or_d3()
+        {
+        }
+
         [TestCase(typeof(Rook), Color.White, "a1")]
         [TestCase(typeof(Knight), Color.White, "b1")]
         [TestCase(typeof(Bishop), Color.White, "c1")]
@@ -90,7 +95,7 @@ namespace MyFish.Tests
             var piece = Board[position];
            
             piece.Should().NotBeNull();
-            piece.Position.Should().Be(position);
+            piece.Position.Should().Be((Position)position);
             piece.Color.Should().Be(color);
         }
     }

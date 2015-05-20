@@ -13,7 +13,7 @@ namespace MyFish.Brain
             }
         }
 
-        private Piece[] _pieces;
+        private readonly Piece[] _pieces;
  
         public Color Turn { get; private set; }
 
@@ -31,7 +31,7 @@ namespace MyFish.Brain
             return BlackPieces.OfType<T>();
         }
 
-        public Piece this[string position] { get { return Pieces.SingleOrDefault(x => x.Position == position); } }
+        public Piece this[Position position] { get { return Pieces.SingleOrDefault(x => x.Position == position); } }
 
         private Board(IEnumerable<Piece> pieces, Color turn)
         {

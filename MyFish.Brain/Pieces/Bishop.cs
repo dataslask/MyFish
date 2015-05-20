@@ -2,8 +2,8 @@
 {
     public class Bishop : Piece
     {
-        public Bishop(char file, int rank, Color color)
-            : base(file, rank, color)
+        public Bishop(Position position, Color color)
+            : base(position, color)
         {
         }
 

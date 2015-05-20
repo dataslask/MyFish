@@ -45,13 +45,19 @@
     <Compile Include="Fen.cs" />
     <Compile Include="IBoardBuilder.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="Moves\Vector.cs" />
+    <Compile Include="Moves\MovesEnumerator.cs" />
+    <Compile Include="Moves\RookMoves.cs" />
+    <Compile Include="Moves\VectorEnumerator.cs" />
     <Compile Include="Piece.cs" />
+    <Compile Include="PieceFacory.cs" />
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="Pieces\King.cs" />
     <Compile Include="Pieces\Knight.cs" />
     <Compile Include="Pieces\Pawn.cs" />
     <Compile Include="Pieces\Queen.cs" />
     <Compile Include="Pieces\Rook.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

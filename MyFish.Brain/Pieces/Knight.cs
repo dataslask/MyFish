@@ -2,8 +2,8 @@
 {
     public class Knight : Piece
     {
-        public Knight(char file, int rank, Color color)
-            : base(file, rank, color)
+        public Knight(Position position, Color color)
+            : base(position, color)
         {
         }
 

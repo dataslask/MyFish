@@ -2,8 +2,8 @@
 {
     public class Pawn : Piece
     {
-        public Pawn(char file, int rank, Color color)
-            : base(file, rank, color)
+        public Pawn(Position position, Color color)
+            : base(position, color)
         {
         }
 

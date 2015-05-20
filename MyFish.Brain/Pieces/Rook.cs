@@ -2,8 +2,8 @@
 {
     public class Rook : Piece
     {
-        public Rook(char file, int rank, Color color)
-            : base(file, rank, color)
+        public Rook(Position position, Color color)
+            : base(position, color)
         {
         }
 

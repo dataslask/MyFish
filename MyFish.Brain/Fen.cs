@@ -8,7 +8,7 @@ namespace MyFish.Brain
     {
         //http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
 
-        private const string InitialBoard = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        public const string InitialBoard = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
         public static Board Init(string fen = InitialBoard)
         {
@@ -56,7 +56,7 @@ namespace MyFish.Brain
 
         private static Piece Create(char piece, char file, int rankNumber)
         {
-            return Piece.Create(piece, file, rankNumber);
+            return PieceFacory.Create(piece, new Position(file, rankNumber));
         }
 
         private static char GetEmptyPieceCount(char piece)

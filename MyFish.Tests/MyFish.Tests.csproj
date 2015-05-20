@@ -49,6 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardScenario.cs" />
+    <Compile Include="TestBoard.cs" />
+    <Compile Include="PositionTests.cs" />
+    <Compile Include="RookMovesTests.cs" />
+    <Compile Include="VectorEnumeratorTests.cs" />
     <Compile Include="When_board_is_initialized.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

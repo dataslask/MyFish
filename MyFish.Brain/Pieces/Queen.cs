@@ -2,8 +2,8 @@ namespace MyFish.Brain.Pieces
 {
     public class Queen : Piece
     {
-        public Queen(char file, int rank, Color color)
-            : base(file, rank, color)
+        public Queen(Position position, Color color)
+            : base(position, color)
         {
         }
 
