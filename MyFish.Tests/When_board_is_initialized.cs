@@ -22,6 +22,18 @@ namespace MyFish.Tests
         }
 
         [Test]
+        public void White_can_castle_queenside()
+        {
+            Board.Can(Castle.Queenside, Color.White).Should().BeTrue();
+        }
+
+        [Test]
+        public void White_can_castle_kingside()
+        {
+            Board.Can(Castle.Kingside, Color.White).Should().BeTrue();
+        }
+
+        [Test]
         public void There_should_be_32_pieces()
         {
             Board.Pieces.Should().HaveCount(32);

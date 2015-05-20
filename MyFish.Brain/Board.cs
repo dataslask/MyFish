@@ -48,5 +48,10 @@ namespace MyFish.Brain
         {
             return null;
         }
+
+        public bool Can(Castle castle, Color white)
+        {
+            return true;
+        }
     }
 }

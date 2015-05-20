@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="Castle.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Fen.cs" />
     <Compile Include="IBoardBuilder.cs" />
