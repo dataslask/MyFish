@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,8 +12,8 @@ namespace MyFish.Brain.Moves
         public MovesEnumerator(Position position)
         {
             StartingPosition = position;
-            
-            Reset();
+
+            BeforeStart = true;
         }
 
         public void Dispose()
@@ -23,7 +24,7 @@ namespace MyFish.Brain.Moves
 
         public void Reset()
         {
-            BeforeStart = true;
+            throw new NotImplementedException();
         }
 
         public Position Current { get; protected set; }

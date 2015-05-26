@@ -1,24 +1,38 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MyFish.Brain.Moves
 {
     public class VectorEnumerator : MovesEnumerator, IEnumerable<Position>
     {
-        private readonly Vector _vector;
+        private readonly Position _position;
         private readonly Board _board;
+        private readonly Vector[] _vectors;
         private readonly Color _friendlyColor;
+        protected readonly Piece Piece;
 
-        public VectorEnumerator(Position position, Vector vector, Board board, Color friendlyColor)
+        private int _currentVector = 0;
+
+        public VectorEnumerator(Position position, Board board, params Vector[] vectors)
             : base(position)
         {
-            _vector = vector;
+            _vectors = vectors;
+
+            _position = position;
             _board = board;
-            _friendlyColor = friendlyColor;
+            Piece = _board[position];
+
+            if (Piece == null)
+            {
+                throw new ArgumentException(string.Format("No piece at {0}", position));
+            }
+
+            _friendlyColor = Piece.Color;
         }
 
         private VectorEnumerator(VectorEnumerator other)
-            : this(other.StartingPosition, other._vector, other._board, other._friendlyColor)
+            : this(other._position, other._board, other._vectors)
         {
         }
 
@@ -34,23 +48,30 @@ namespace MyFish.Brain.Moves
             {
                 if (AtOpponent())
                 {
-                    return Stop();
+                    return TryNextVector();
                 }
             }
-            Current += _vector;
+            Current += _vectors[_currentVector];
 
-            if (AtFriendly())
+            if (AtFriendly() || !Current.IsValid)
             {
-                return Stop();
+                return TryNextVector();
             }
             return Current.IsValid;
         }
 
-        private bool Stop()
+        private bool TryNextVector()
         {
-            Current = Position.Invalid;
+            if (++_currentVector == _vectors.Length)
+            {
+                Current = Position.Invalid;
+                return false;
+            }
+            Current = StartingPosition;
 
-            return false;
+            BeforeStart = false;
+            
+            return MoveNext();
         }
 
         private bool AtFriendly()

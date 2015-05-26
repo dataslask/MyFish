@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="BishopMovesTests.cs" />
     <Compile Include="BoardScenario.cs" />
+    <Compile Include="MultiVectorEnumeratorTests.cs" />
     <Compile Include="TestBoard.cs" />
     <Compile Include="PositionTests.cs" />
     <Compile Include="RookMovesTests.cs" />

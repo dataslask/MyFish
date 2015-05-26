@@ -23,11 +23,17 @@ namespace MyFish.Brain
 
         public T As<T>() where T : Piece
         {
+            Assert<T>();
+
+            return (T)this;
+        }
+
+        public void Assert<T>() where T : Piece
+        {
             if (!(this is T))
             {
                 throw new InvalidCastException(string.Format("{0} is not a {1}", this, typeof(T).Name));
             }
-            return (T)this;
         }
     }
 
