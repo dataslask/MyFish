@@ -2,6 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using MyFish.Brain;
+using MyFish.Brain.Moves;
 using MyFish.Brain.Pieces;
 using NUnit.Framework;
 
@@ -54,8 +55,15 @@ namespace MyFish.Tests
         }
 
         [Test]
-        public void White_pawn_at_d1_may_only_move_to_d2_or_d3()
+        public void White_rook_at_a1_has_nowhere_to_go()
         {
+            new RookMoves("a1", Board).Should().BeEmpty();
+        }
+
+        [Test]
+        public void White_bihsop_at_c1_has_nowhere_to_go()
+        {
+            new BishopMoves("c1", Board).Should().BeEmpty();
         }
 
         [TestCase(typeof(Rook), Color.White, "a1")]

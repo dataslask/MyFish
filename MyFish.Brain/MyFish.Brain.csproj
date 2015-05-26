@@ -45,6 +45,7 @@
     <Compile Include="Fen.cs" />
     <Compile Include="IBoardBuilder.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="Moves\BishopMoves.cs" />
     <Compile Include="Moves\Vector.cs" />
     <Compile Include="Moves\MovesEnumerator.cs" />
     <Compile Include="Moves\RookMoves.cs" />
