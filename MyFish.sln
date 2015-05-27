@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFish.Tests", "MyFish.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFish.Brain", "MyFish.Brain\MyFish.Brain.csproj", "{BFC7AE0E-7356-41E0-BF24-8DCA1A68827C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFish.Web", "MyFish.Web\MyFish.Web.csproj", "{4F92A2C4-4317-4BDC-9CC0-944681D66224}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{BFC7AE0E-7356-41E0-BF24-8DCA1A68827C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFC7AE0E-7356-41E0-BF24-8DCA1A68827C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFC7AE0E-7356-41E0-BF24-8DCA1A68827C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F92A2C4-4317-4BDC-9CC0-944681D66224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F92A2C4-4317-4BDC-9CC0-944681D66224}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F92A2C4-4317-4BDC-9CC0-944681D66224}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F92A2C4-4317-4BDC-9CC0-944681D66224}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

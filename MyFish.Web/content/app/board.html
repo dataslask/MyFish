@@ -1,0 +1,7 @@
+﻿<table style="border:1px solid">
+    <tr ng-repeat="rank in board.pieces track by $index">
+        <td style="border:1px solid" ng-repeat="file in rank track by $index">
+            <div>{{file.color}}-{{file.type}} ({{file.position.file}}{{file.position.rank}})</div>
+        </td>
+    </tr>
+</table>
