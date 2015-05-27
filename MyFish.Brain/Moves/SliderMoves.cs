@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MyFish.Brain.Moves
 {
-    public class VectorEnumerator : MovesEnumerator, IEnumerable<Position>
+    public class SliderMoves : MovesEnumerator, IEnumerable<Position>
     {
         private readonly Position _position;
         private readonly Board _board;
@@ -14,7 +14,7 @@ namespace MyFish.Brain.Moves
 
         private int _currentVector = 0;
 
-        public VectorEnumerator(Position position, Board board, params Vector[] vectors)
+        public SliderMoves(Position position, Board board, params Vector[] vectors)
             : base(position)
         {
             _vectors = vectors;
@@ -31,7 +31,7 @@ namespace MyFish.Brain.Moves
             _friendlyColor = Piece.Color;
         }
 
-        private VectorEnumerator(VectorEnumerator other)
+        private SliderMoves(SliderMoves other)
             : this(other._position, other._board, other._vectors)
         {
         }
@@ -90,7 +90,7 @@ namespace MyFish.Brain.Moves
 
         public IEnumerator<Position> GetEnumerator()
         {
-            return new VectorEnumerator(this);
+            return new SliderMoves(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

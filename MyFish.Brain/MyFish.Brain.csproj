@@ -47,7 +47,7 @@
     <Compile Include="Move.cs" />
     <Compile Include="Moves\BishopMoves.cs" />
     <Compile Include="Moves\QueenMoves.cs" />
-    <Compile Include="Moves\VectorEnumerator.cs" />
+    <Compile Include="Moves\SliderMoves.cs" />
     <Compile Include="Moves\Vector.cs" />
     <Compile Include="Moves\MovesEnumerator.cs" />
     <Compile Include="Moves\RookMoves.cs" />
