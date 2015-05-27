@@ -1,96 +1,67 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MyFish.Brain.Moves
 {
-    public class SliderMoves : MovesEnumerator, IEnumerable<Position>
+    public class SliderMoves<T> : MovesEnumerator<T>, IEnumerable<Position> where T : Piece
     {
-        private readonly Position _position;
-        private readonly Board _board;
-        private readonly Vector[] _vectors;
-        private readonly Color _friendlyColor;
-        protected readonly Piece Piece;
-
-        private int _currentVector = 0;
+        private readonly List<Vector> _vectors;
+        private readonly IEnumerator<Vector> _vector;
 
         public SliderMoves(Position position, Board board, params Vector[] vectors)
-            : base(position)
+            : this(position, board, vectors.ToList())
+        {
+        }
+
+        private SliderMoves(Position position, Board board, List<Vector> vectors)
+            : base(position, board)
         {
             _vectors = vectors;
 
-            _position = position;
-            _board = board;
-            Piece = _board[position];
-
-            if (Piece == null)
-            {
-                throw new ArgumentException(string.Format("No piece at {0}", position));
-            }
-
-            _friendlyColor = Piece.Color;
+            _vector = _vectors.GetEnumerator();
         }
 
-        private SliderMoves(SliderMoves other)
-            : this(other._position, other._board, other._vectors)
+        private SliderMoves(SliderMoves<T> other)
+            : this(other.StartingPosition, other.Board, other._vectors)
         {
         }
 
         public override bool MoveNext()
         {
-            if (BeforeStart)
+            if (BeforeStart || AtOpponent())
             {
-                Current = StartingPosition;
+                return TryNextVector();
+            }
 
-                BeforeStart = false;
-            }
-            else
-            {
-                if (AtOpponent())
-                {
-                    return TryNextVector();
-                }
-            }
-            Current += _vectors[_currentVector];
+            Current += _vector.Current;
 
             if (AtFriendly() || !Current.IsValid)
             {
                 return TryNextVector();
             }
-            return Current.IsValid;
+            return true;
         }
 
         private bool TryNextVector()
         {
-            if (++_currentVector == _vectors.Length)
+            if (_vector.MoveNext())
             {
-                Current = Position.Invalid;
-                return false;
+                Current = StartingPosition;
+
+                BeforeStart = false;
+
+                return MoveNext();
             }
-            Current = StartingPosition;
 
-            BeforeStart = false;
-            
-            return MoveNext();
-        }
+            Current = Position.Invalid;
 
-        private bool AtFriendly()
-        {
-            var piece = _board[Current];
-
-            return piece != null && piece.Color == _friendlyColor;
-        }
-
-        private bool AtOpponent()
-        {
-            var piece = _board[Current];
-
-            return piece != null && piece.Color != _friendlyColor;
+            return false;
         }
 
         public IEnumerator<Position> GetEnumerator()
         {
-            return new SliderMoves(this);
+            return new SliderMoves<T>(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

@@ -2,12 +2,11 @@
 
 namespace MyFish.Brain.Moves
 {
-    public class RookMoves : SliderMoves
+    public class RookMoves : SliderMoves<Rook>
     {
         public RookMoves(Position position, Board board)
             : base(position, board, Vector.North, Vector.South, Vector.West, Vector.East)
         {
-            Piece.AssertIs<Rook>();
         }
     }
 }

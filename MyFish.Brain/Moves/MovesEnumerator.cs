@@ -4,14 +4,29 @@ using System.Collections.Generic;
 
 namespace MyFish.Brain.Moves
 {
-    public abstract class MovesEnumerator : IEnumerator<Position>
+    public abstract class MovesEnumerator<T> : IEnumerator<Position> where T : Piece
     {
         protected readonly Position StartingPosition;
+        protected readonly Board Board;
+        protected readonly Color FriendlyColor;
+
         protected bool BeforeStart;
 
-        public MovesEnumerator(Position position)
+        protected MovesEnumerator(Position position, Board board)
         {
             StartingPosition = position;
+            Board = board;
+
+            var piece = Board[position];
+
+            if (piece == null)
+            {
+                throw new ArgumentException(string.Format("No piece at {0}", position));
+            }
+
+            piece.AssertIs<T>();
+
+            FriendlyColor = piece.Color;
 
             BeforeStart = true;
         }
@@ -32,6 +47,20 @@ namespace MyFish.Brain.Moves
         object IEnumerator.Current
         {
             get { return Current; }
+        }
+
+        protected bool AtFriendly()
+        {
+            var piece = Board[Current];
+
+            return piece != null && piece.Color == FriendlyColor;
+        }
+
+        protected bool AtOpponent()
+        {
+            var piece = Board[Current];
+
+            return piece != null && piece.Color != FriendlyColor;
         }
     }
 }
