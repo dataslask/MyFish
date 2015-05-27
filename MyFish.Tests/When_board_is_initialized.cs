@@ -65,6 +65,12 @@ namespace MyFish.Tests
         {
             new BishopMoves("c1", Board).Should().BeEmpty();
         }
+     
+        [Test]
+        public void White_queen_has_nowhere_to_go()
+        {
+            new QueenMoves("d1", Board).Should().BeEmpty();
+        }
 
         [TestCase(typeof(Rook), Color.White, "a1")]
         [TestCase(typeof(Knight), Color.White, "b1")]

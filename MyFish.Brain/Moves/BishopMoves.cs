@@ -4,9 +4,10 @@ namespace MyFish.Brain.Moves
 {
     public class BishopMoves : VectorEnumerator
     {
-        public BishopMoves(Position position, Board board) : base(position, board, Vector.NorthEast, Vector.SouthEast, Vector.NorthWest, Vector.SouthWest)
+        public BishopMoves(Position position, Board board)
+            : base(position, board, Vector.NorthEast, Vector.SouthEast, Vector.NorthWest, Vector.SouthWest)
         {
-            Piece.Assert<Bishop>();
+            Piece.AssertIs<Bishop>();
         }
     }
 }

@@ -23,12 +23,12 @@ namespace MyFish.Brain
 
         public T As<T>() where T : Piece
         {
-            Assert<T>();
+            AssertIs<T>();
 
             return (T)this;
         }
 
-        public void Assert<T>() where T : Piece
+        public void AssertIs<T>() where T : Piece
         {
             if (!(this is T))
             {
