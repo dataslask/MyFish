@@ -24,13 +24,13 @@ namespace MyFish.Web
 
             for (var rank = 0; rank < 8; rank++)
             {
-                dto[7 - rank] = new Contracts.Piece[8];
+                dto[rank] = new Contracts.Piece[8];
 
                 for (var file = 0; file < 8; file++)
                 {
                     var position = new Position((char) ('a' + file), rank + 1);
 
-                    dto[7 - rank][file] = Mapper.Map<Piece, Contracts.Piece>(pieces.SingleOrDefault(x => x.Position == position));
+                    dto[rank][file] = Mapper.Map<Piece, Contracts.Piece>(pieces.SingleOrDefault(x => x.Position == position));
                 }
             }
 

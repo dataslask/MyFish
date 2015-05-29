@@ -1,7 +1,14 @@
-﻿<table style="border:1px solid">
-    <tr ng-repeat="rank in board.pieces track by $index">
-        <td style="border:1px solid" ng-repeat="file in rank track by $index">
-            <div>{{file.color}}-{{file.type}} ({{file.position.file}}{{file.position.rank}})</div>
-        </td>
-    </tr>
-</table>
+﻿<div class="board">
+    <table>
+        <tr ng-repeat="rank in board.ranks">
+            <td class="legend">{{rank.number}}</td>
+            <td ng-repeat="cell in rank.files" ng-class="cell.isBlack ? 'black' : 'white'">
+                <span class="piece" ng-class="{selected: cell.piece.selected}" ng-click="board.selectPiece(cell.piece)">{{cell.piece | piece}}</span>
+            </td>
+        </tr>
+        <tr class="legend">
+            <td class="legend"></td>
+            <td ng-repeat="file in board.enumFiles" class="legend">{{file}}</td>
+        </tr>
+    </table>
+</div>

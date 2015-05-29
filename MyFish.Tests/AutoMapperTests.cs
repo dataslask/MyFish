@@ -48,13 +48,13 @@ namespace MyFish.Tests
             {
                 for (var j = 0; j < 8; j++)
                 {
-                    if (!(i == 6 && j == 1))
+                    if (!(i == 1 && j == 1))
                     {
-                        dto.Pieces[i][j].Should().BeNull("there should be no piece at {0}{1}", (char)('a' + j), 7 - i + 1);
+                        dto.Pieces[i][j].Should().BeNull("there should be no piece at {0}{1}", (char)('a' + j), i + 1);
                     }
                 }
             }
-            var piece = dto.Pieces[6][1];
+            var piece = dto.Pieces[1][1];
 
             piece.Should().NotBeNull();
             piece.Type.Should().Be("pawn");

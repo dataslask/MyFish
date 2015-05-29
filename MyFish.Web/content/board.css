@@ -1,0 +1,48 @@
+﻿.board {
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    background: whitesmoke;
+    border: 1px solid gray;
+    display: inline-block;
+}
+
+    .board table {
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+        .board table tr {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .board table td {
+            border: 1px solid gray;
+            width: 40px;
+            height: 40px;
+        }
+
+            .board table td.black {
+                background: lightgray;
+            }
+
+            .board table td.white {
+                background: whitesmoke;
+            }
+
+            .board table td.legend {
+                border: 0;
+            }
+
+.piece {
+    font-size: 200%;
+    cursor: pointer;
+    color: darkslateblue;
+}
+
+.piece.selected {
+    color: black;
+    font-weight: bold;
+}

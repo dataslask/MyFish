@@ -99,7 +99,11 @@
   <ItemGroup>
     <Content Include="content\app\app.js" />
     <Content Include="content\app\board.html" />
+    <Content Include="content\board.css" />
     <Content Include="content\Index.html" />
+    <Content Include="content\lib\angular-route.min.js" />
+    <Content Include="content\lib\angular.min.js" />
+    <Content Include="content\lib\underscore-min.js" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
