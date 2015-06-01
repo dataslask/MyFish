@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using MyFish.Brain;
@@ -70,6 +71,12 @@ namespace MyFish.Tests
         public void White_queen_has_nowhere_to_go()
         {
             new QueenMoves("d1", Board).Should().BeEmpty();
+        }
+
+        [Test]
+        public void White_knight_at_b1_can_go_to_a3_and_c3()
+        {
+            new KnightMoves("b1", Board).Should().BeEquivalentTo(Expected.Moves("a3 c3"));
         }
 
         [TestCase(typeof(Rook), Color.White, "a1")]

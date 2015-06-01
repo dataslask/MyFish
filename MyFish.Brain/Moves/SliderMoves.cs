@@ -9,6 +9,8 @@ namespace MyFish.Brain.Moves
         private readonly List<Vector> _vectors;
         private readonly IEnumerator<Vector> _vector;
 
+        private bool _beforeStart;
+
         public SliderMoves(Position position, Board board, params Vector[] vectors)
             : this(position, board, vectors.ToList())
         {
@@ -17,6 +19,8 @@ namespace MyFish.Brain.Moves
         private SliderMoves(Position position, Board board, List<Vector> vectors)
             : base(position, board)
         {
+            _beforeStart = true;
+
             _vectors = vectors;
 
             _vector = _vectors.GetEnumerator();
@@ -29,7 +33,7 @@ namespace MyFish.Brain.Moves
 
         public override bool MoveNext()
         {
-            if (BeforeStart || AtOpponent())
+            if (_beforeStart || AtOpponent())
             {
                 return TryNextVector();
             }
@@ -49,7 +53,7 @@ namespace MyFish.Brain.Moves
             {
                 Current = StartingPosition;
 
-                BeforeStart = false;
+                _beforeStart = false;
 
                 return MoveNext();
             }

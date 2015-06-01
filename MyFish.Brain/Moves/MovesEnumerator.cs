@@ -10,8 +10,6 @@ namespace MyFish.Brain.Moves
         protected readonly Board Board;
         protected readonly Color FriendlyColor;
 
-        protected bool BeforeStart;
-
         protected MovesEnumerator(Position position, Board board)
         {
             StartingPosition = position;
@@ -27,8 +25,6 @@ namespace MyFish.Brain.Moves
             piece.AssertIs<T>();
 
             FriendlyColor = piece.Color;
-
-            BeforeStart = true;
         }
 
         public void Dispose()

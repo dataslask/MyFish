@@ -56,13 +56,16 @@
   <ItemGroup>
     <Compile Include="AutoMapper.cs" />
     <Compile Include="AutoMapperTests.cs" />
-    <Compile Include="BishopMovesTests.cs" />
+    <Compile Include="Expected.cs" />
+    <Compile Include="Moves\BishopMovesTests.cs" />
     <Compile Include="BoardScenario.cs" />
-    <Compile Include="QueenMovesTests.cs" />
+    <Compile Include="Moves\KnightMovesTests.cs" />
+    <Compile Include="Moves\QueenMovesTests.cs" />
+    <Compile Include="Moves\StepperMovesTests.cs" />
     <Compile Include="TestBoard.cs" />
     <Compile Include="PositionTests.cs" />
-    <Compile Include="RookMovesTests.cs" />
-    <Compile Include="SliderMovesTests.cs" />
+    <Compile Include="Moves\RookMovesTests.cs" />
+    <Compile Include="Moves\SliderMovesTests.cs" />
     <Compile Include="When_board_is_initialized.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

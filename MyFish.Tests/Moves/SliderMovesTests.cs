@@ -3,7 +3,7 @@ using MyFish.Brain.Moves;
 using MyFish.Brain.Pieces;
 using NUnit.Framework;
 
-namespace MyFish.Tests
+namespace MyFish.Tests.Moves
 {
     [TestFixture]
     public class SliderMovesTests
