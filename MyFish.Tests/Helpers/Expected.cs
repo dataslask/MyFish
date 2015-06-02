@@ -2,7 +2,7 @@
 using System.Linq;
 using MyFish.Brain;
 
-namespace MyFish.Tests
+namespace MyFish.Tests.Helpers
 {
     public static class Expected
     {

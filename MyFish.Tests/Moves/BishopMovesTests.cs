@@ -2,6 +2,7 @@ using System.Linq;
 using FluentAssertions;
 using MyFish.Brain;
 using MyFish.Brain.Moves;
+using MyFish.Tests.Helpers;
 using NUnit.Framework;
 
 namespace MyFish.Tests.Moves

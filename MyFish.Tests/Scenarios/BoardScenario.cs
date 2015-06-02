@@ -2,7 +2,7 @@
 using MyFish.Brain;
 using NUnit.Framework;
 
-namespace MyFish.Tests
+namespace MyFish.Tests.Scenarios
 {
     internal abstract class BoardScenario
     {

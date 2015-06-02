@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using MyFish.Brain.Moves;
 using MyFish.Brain.Pieces;
+using MyFish.Tests.Helpers;
 using NUnit.Framework;
 
-namespace MyFish.Tests.Moves
+namespace MyFish.Tests.Primitives
 {
     [TestFixture]
     public class SliderMovesTests

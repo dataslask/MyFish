@@ -3,7 +3,7 @@ using MyFish.Brain;
 using MyFish.Brain.Moves;
 using NUnit.Framework;
 
-namespace MyFish.Tests
+namespace MyFish.Tests.Primitives
 {
     [TestFixture]
     public class PositionTests

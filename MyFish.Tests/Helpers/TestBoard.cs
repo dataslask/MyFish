@@ -1,16 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using MyFish.Brain;
 
-namespace MyFish.Tests
+namespace MyFish.Tests.Helpers
 {
     public static class TestBoard
     {
-        public static Board Empty()
-        {
-            return Board.GetBuilder().Build(new Piece[0], Color.White, null);            
-        }
-
         public static Board With(string pieceList, Position enPassantTarget = null)
         {
             var pieces = pieceList.Split(' ').Where(x => !string.IsNullOrEmpty(x)).Select(CreatePiece);
@@ -22,6 +16,5 @@ namespace MyFish.Tests
         {
             return PieceFacory.Create(encodedPiece[0], encodedPiece.Substring(1));
         }
-
     }
 }

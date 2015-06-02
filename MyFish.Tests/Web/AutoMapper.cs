@@ -1,7 +1,6 @@
-﻿using MyFish.Web;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace MyFish.Tests
+namespace MyFish.Tests.Web
 {
     [SetUpFixture]
     public class AutoMapper
@@ -9,7 +8,7 @@ namespace MyFish.Tests
         [SetUp]
         public void Setup()
         {
-            Web.AutoMapper.Configure();
+            MyFish.Web.AutoMapper.Configure();
         }
     }
 }

@@ -3,9 +3,10 @@ using AutoMapper;
 using FluentAssertions;
 using MyFish.Brain;
 using MyFish.Brain.Pieces;
+using MyFish.Tests.Helpers;
 using NUnit.Framework;
 
-namespace MyFish.Tests
+namespace MyFish.Tests.Web
 {
     [TestFixture]
     public class AutoMapperTests
@@ -27,7 +28,7 @@ namespace MyFish.Tests
         {
             var piece = new Rook("h8", Color.Black);
 
-            var dto = Mapper.Map<Web.Contracts.Piece>(piece);
+            var dto = Mapper.Map<MyFish.Web.Contracts.Piece>(piece);
 
             dto.Color.Should().Be("black");
             dto.Type.Should().Be("rook");
@@ -40,7 +41,7 @@ namespace MyFish.Tests
         {
             var board = TestBoard.With("Pb2");
 
-            var dto = Mapper.Map<Web.Contracts.Board>(board);
+            var dto = Mapper.Map<MyFish.Web.Contracts.Board>(board);
 
             dto.Pieces.Sum(x => x.Length).Should().Be(64);
 
