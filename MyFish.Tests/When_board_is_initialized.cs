@@ -79,6 +79,12 @@ namespace MyFish.Tests
             new KnightMoves("b1", Board).Should().BeEquivalentTo(Expected.Moves("a3 c3"));
         }
 
+        [Test]
+        public void White_pawn_at_d2_can_go_to_d3_and_d4()
+        {
+            new PawnMoves("d2", Board).Should().BeEquivalentTo(Expected.Moves("d3 d4"));
+        }
+
         [TestCase(typeof(Rook), Color.White, "a1")]
         [TestCase(typeof(Knight), Color.White, "b1")]
         [TestCase(typeof(Bishop), Color.White, "c1")]

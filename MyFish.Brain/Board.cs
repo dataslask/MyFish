@@ -7,15 +7,16 @@ namespace MyFish.Brain
     {
         private class Builder : IBoardBuilder
         {
-            public Board Build(IEnumerable<Piece> pieces, Color turn)
+            public Board Build(IEnumerable<Piece> pieces, Color turn, Position enPassantTarget)
             {
-                return new Board(pieces, turn);
+                return new Board(pieces, turn, enPassantTarget ?? Position.Invalid);
             }
         }
 
         private readonly Piece[] _pieces;
  
         public Color Turn { get; private set; }
+        public Position EnPassantTarget { get; private set; }
 
         public IEnumerable<Piece> Pieces { get { return _pieces; } }
         public IEnumerable<Piece> WhitePieces { get { return _pieces.Where(x => x.Color == Color.White); } }
@@ -33,10 +34,11 @@ namespace MyFish.Brain
 
         public Piece this[Position position] { get { return Pieces.SingleOrDefault(x => x.Position == position); } }
 
-        private Board(IEnumerable<Piece> pieces, Color turn)
+        private Board(IEnumerable<Piece> pieces, Color turn, Position enPassantTarget)
         {
             _pieces = pieces.ToArray();
             Turn = turn;
+            EnPassantTarget = enPassantTarget;
         }
 
         public static IBoardBuilder GetBuilder()

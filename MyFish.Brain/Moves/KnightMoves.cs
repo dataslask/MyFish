@@ -1,18 +1,29 @@
-﻿using MyFish.Brain.Pieces;
+﻿using System.Collections.Generic;
+using MyFish.Brain.Pieces;
 
 namespace MyFish.Brain.Moves
 {
     public class KnightMoves : StepperMoves<Knight>
     {
-        private static readonly Vector[] Steps =
+        private static readonly List<Vector> Steps = new List<Vector>
         {
             new Vector(2, 1), new Vector(2, -1), new Vector(-2, 1), new Vector(-2, -1),
             new Vector(1, 2), new Vector(-1, 2), new Vector(1, -2), new Vector(-1, -2)
         };
 
         public KnightMoves(Position position, Board board)
-            : base(position, board, Steps)
+            : base(position, board)
         {
+        }
+
+        protected override IEnumerable<Vector> CalculateSteps()
+        {
+            return Steps;
+        }
+
+        public override IEnumerator<Position> GetEnumerator()
+        {
+            return new KnightMoves(StartingPosition, Board);
         }
     }
 }

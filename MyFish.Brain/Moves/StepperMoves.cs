@@ -4,30 +4,23 @@ using System.Linq;
 
 namespace MyFish.Brain.Moves
 {
-    public class StepperMoves<T> : MovesEnumerator<T>, IEnumerable<Position> where T : Piece
+    public abstract class StepperMoves<T> : MovesEnumerator<T>, IEnumerable<Position> where T : Piece
     {
-        private readonly List<Vector> _steps;
-        private readonly IEnumerator<Vector> _step;
+        private List<Vector> _steps;
+        private IEnumerator<Vector> _step;
 
-        public StepperMoves(Position position, Board board, params Vector[] steps)
-            : this(position, board, steps.ToList())
-        {
-        }
-
-        private StepperMoves(Position position, Board board, List<Vector> steps)
+        protected StepperMoves(Position position, Board board)
             : base(position, board)
-        {
-            _steps = steps;
-            _step = _steps.GetEnumerator();
-        }
-
-        private StepperMoves(StepperMoves<T> other)
-            : this(other.StartingPosition, other.Board, other._steps)
         {
         }
 
         public override bool MoveNext()
         {
+            if (_steps == null)
+            {
+                _steps = CalculateSteps().ToList();
+                _step = _steps.GetEnumerator();
+            }
             while (_step.MoveNext())
             {
                 Current = StartingPosition + _step.Current;
@@ -42,10 +35,9 @@ namespace MyFish.Brain.Moves
             return false;
         }
 
-        public IEnumerator<Position> GetEnumerator()
-        {
-            return new StepperMoves<T>(this);
-        }
+        protected abstract IEnumerable<Vector> CalculateSteps();
+
+        public abstract IEnumerator<Position> GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()
         {

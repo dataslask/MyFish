@@ -4,6 +4,6 @@ namespace MyFish.Brain
 {
     public interface IBoardBuilder
     {
-        Board Build(IEnumerable<Piece> pieces, Color turn);
+        Board Build(IEnumerable<Piece> pieces, Color turn, Position enPassantTarget);
     }
 }

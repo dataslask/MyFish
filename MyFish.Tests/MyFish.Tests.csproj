@@ -60,8 +60,8 @@
     <Compile Include="Moves\BishopMovesTests.cs" />
     <Compile Include="BoardScenario.cs" />
     <Compile Include="Moves\KnightMovesTests.cs" />
+    <Compile Include="Moves\PawnMovesTests.cs" />
     <Compile Include="Moves\QueenMovesTests.cs" />
-    <Compile Include="Moves\StepperMovesTests.cs" />
     <Compile Include="TestBoard.cs" />
     <Compile Include="PositionTests.cs" />
     <Compile Include="Moves\RookMovesTests.cs" />

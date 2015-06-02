@@ -24,7 +24,7 @@ namespace MyFish.Brain
 
         public static implicit operator Position(string position)
         {
-            return new Position(position);
+            return string.IsNullOrEmpty(position) ? Position.Invalid : new Position(position);
         }
 
         public static Position operator+ (Position position, Vector vector)

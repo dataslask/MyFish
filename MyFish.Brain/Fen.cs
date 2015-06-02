@@ -16,8 +16,14 @@ namespace MyFish.Brain
 
             var pieces = GetPieces(fields[0]);
             var turn = GetTurn(fields[1]);
+            var enPassant = GetEnPassant(fields[3]);
 
-            return Board.GetBuilder().Build(pieces, turn);
+            return Board.GetBuilder().Build(pieces, turn, enPassant);
+        }
+
+        private static Position GetEnPassant(string enPassant)
+        {
+            return enPassant == "-" ? null : enPassant;
         }
 
         private static Color GetTurn(string turn)
@@ -46,7 +52,7 @@ namespace MyFish.Brain
                     else
                     {
                         yield return Create(piece, file, rankNumber);
-                        
+
                         file++;
                     }
                 }
