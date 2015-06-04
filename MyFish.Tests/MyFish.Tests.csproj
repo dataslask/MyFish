@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\MovesJoinExtension.cs" />
     <Compile Include="Moves\KingMovesTests.cs" />
     <Compile Include="Web\AutoMapper.cs" />
     <Compile Include="Web\AutoMapperTests.cs" />

@@ -63,7 +63,7 @@ namespace MyFish.Brain.Moves
             return piece != null && piece.Color != FriendlyColor;
         }
 
-        public override IEnumerator<Position> GetEnumerator()
+        public override IEnumerator<Move> GetEnumerator()
         {
             return new PawnMoves(StartingPosition, Board, _attacksOnly);
         }

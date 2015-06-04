@@ -35,6 +35,37 @@ namespace MyFish.Brain
                 throw new InvalidCastException(string.Format("{0} is not a {1}", this, typeof(T).Name));
             }
         }
+
+        protected bool Equals(Piece other)
+        {
+            return Equals(Position, other.Position) && Color == other.Color;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Piece) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Position != null ? Position.GetHashCode() : 0)*397) ^ (int) Color;
+            }
+        }
+
+        public static bool operator ==(Piece left, Piece right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Piece left, Piece right)
+        {
+            return !Equals(left, right);
+        }
     }
 
 

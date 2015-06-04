@@ -11,7 +11,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_list_all_moves_on_an_empty_board()
         {
-            var expected = Expected.Moves("c6 e6 c2 e2 b3 b5 f3 f5");
+            var expected = Expected.Moves("nd4", "c6 e6 c2 e2 b3 b5 f3 f5");
 
             var board = TestBoard.With("nd4");
 
@@ -21,7 +21,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_not_move_outside_board()
         {
-            var expected = Expected.Moves("a3 c3 d2");
+            var expected = Expected.Moves("nb1", "a3 c3 d2");
 
             var board = TestBoard.With("nb1");
 
@@ -31,7 +31,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_take_opponent_pieces()
         {
-            var expected = Expected.Moves("c6 e6 c2 e2 b3 b5 f3 f5");
+            var expected = Expected.Moves("nd4", "c6 e6 c2 e2 b3 b5 f3 f5");
 
             var board = TestBoard.With("nd4 Pe6 Rb5");
 
@@ -41,7 +41,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_not_take_friendly_pieces()
         {
-            var expected = Expected.Moves("c6 c2 e2 b3 f3 f5");
+            var expected = Expected.Moves("nd4", "c6 c2 e2 b3 f3 f5");
 
             var board = TestBoard.With("nd4 pe6 rb5");
 

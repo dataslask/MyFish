@@ -5,7 +5,7 @@ namespace MyFish.Brain.Moves
 {
     public static class Moves
     {
-        private static readonly Dictionary<char, Func<Position, Board, bool, IEnumerable<Position>>> Factory = new Dictionary<char, Func<Position, Board, bool, IEnumerable<Position>>>
+        private static readonly Dictionary<char, Func<Position, Board, bool, IEnumerable<Move>>> Factory = new Dictionary<char, Func<Position, Board, bool, IEnumerable<Move>>>
         {
             {'r', (position, board, attacksOnly) => new RookMoves(position, board)},
             {'n', (position, board, attacksOnly) => new KnightMoves(position, board)},
@@ -15,7 +15,7 @@ namespace MyFish.Brain.Moves
             {'p', (position, board, attacksOnly) => new PawnMoves(position, board, attacksOnly)},
         };
 
-        public static IEnumerable<Position> For(Piece piece, Board board, bool attacksOnly)
+        public static IEnumerable<Move> For(Piece piece, Board board, bool attacksOnly)
         {
             if (!Factory.ContainsKey(piece.Type))
             {

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MyFish.Brain.Moves
 {
-    public class SliderMoves<T> : MovesEnumerator<T>, IEnumerable<Position> where T : Piece
+    public class SliderMoves<T> : MovesEnumerator<T>, IEnumerable<Move> where T : Piece
     {
         private readonly List<Vector> _vectors;
         private readonly IEnumerator<Vector> _vector;
@@ -51,19 +51,19 @@ namespace MyFish.Brain.Moves
         {
             if (_vector.MoveNext())
             {
-                Current = StartingPosition;
+                Current = new Move(Piece, StartingPosition);
 
                 _beforeStart = false;
 
                 return MoveNext();
             }
 
-            Current = Position.Invalid;
+            Current = Move.Invalid;
 
             return false;
         }
 
-        public IEnumerator<Position> GetEnumerator()
+        public IEnumerator<Move> GetEnumerator()
         {
             return new SliderMoves<T>(this);
         }

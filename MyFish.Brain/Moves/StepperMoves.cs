@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MyFish.Brain.Moves
 {
-    public abstract class StepperMoves<T> : MovesEnumerator<T>, IEnumerable<Position> where T : Piece
+    public abstract class StepperMoves<T> : MovesEnumerator<T>, IEnumerable<Move> where T : Piece
     {
         private List<Vector> _steps;
         private IEnumerator<Vector> _step;
@@ -23,21 +23,21 @@ namespace MyFish.Brain.Moves
             }
             while (_step.MoveNext())
             {
-                Current = StartingPosition + _step.Current;
+                Current = new Move(Piece, StartingPosition + _step.Current);
 
-                if (Current.IsValid && !AtFriendly())
+                if (Current.Destination.IsValid && !AtFriendly())
                 {
                     return true;
                 }
             }
-            Current = Position.Invalid;
+            Current = Move.Invalid;
 
             return false;
         }
 
         protected abstract IEnumerable<Vector> CalculateSteps();
 
-        public abstract IEnumerator<Position> GetEnumerator();
+        public abstract IEnumerator<Move> GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()
         {

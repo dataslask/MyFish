@@ -21,7 +21,7 @@ namespace MyFish.Brain.Moves
             return Steps;
         }
 
-        public override IEnumerator<Position> GetEnumerator()
+        public override IEnumerator<Move> GetEnumerator()
         {
             return new KnightMoves(StartingPosition, Board);
         }

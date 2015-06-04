@@ -76,13 +76,13 @@ namespace MyFish.Tests.Scenarios
         [Test]
         public void White_knight_at_b1_can_go_to_a3_and_c3()
         {
-            new KnightMoves("b1", Board).Should().BeEquivalentTo(Expected.Moves("a3 c3"));
+            new KnightMoves("b1", Board).Should().BeEquivalentTo(Expected.Moves("Nb1", "a3 c3"));
         }
 
         [Test]
         public void White_pawn_at_d2_can_go_to_d3_and_d4()
         {
-            new PawnMoves("d2", Board).Should().BeEquivalentTo(Expected.Moves("d3 d4"));
+            new PawnMoves("d2", Board).Should().BeEquivalentTo(Expected.Moves("Pd2", "d3 d4"));
         }
 
         [Test]

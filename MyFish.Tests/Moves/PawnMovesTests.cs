@@ -27,8 +27,8 @@ namespace MyFish.Tests.Moves
         {
             var board = TestBoard.With("Pb2 pb7");
 
-            new PawnMoves("b2", board).Should().BeEquivalentTo(Expected.Moves("b3 b4"), "white pawn is not blocked");
-            new PawnMoves("b7", board).Should().BeEquivalentTo(Expected.Moves("b6 b5"), "black pawn is not blocked");
+            new PawnMoves("b2", board).Should().BeEquivalentTo(Expected.Moves("Pb2", "b3 b4"), "white pawn is not blocked");
+            new PawnMoves("b7", board).Should().BeEquivalentTo(Expected.Moves("pb7", "b6 b5"), "black pawn is not blocked");
         }
 
         [Test]
@@ -47,10 +47,10 @@ namespace MyFish.Tests.Moves
         {
             var board = TestBoard.With("Pc2 Qc4 Pd2 pd4 pc7 qc5 pd7 Pd5");
 
-            new PawnMoves("c2", board).Should().BeEquivalentTo(Expected.Moves("c3"));
-            new PawnMoves("d2", board).Should().BeEquivalentTo(Expected.Moves("d3"));
-            new PawnMoves("c7", board).Should().BeEquivalentTo(Expected.Moves("c6"));
-            new PawnMoves("d7", board).Should().BeEquivalentTo(Expected.Moves("d6"));
+            new PawnMoves("c2", board).Should().BeEquivalentTo(Expected.Moves("Pc2", "c3"));
+            new PawnMoves("d2", board).Should().BeEquivalentTo(Expected.Moves("Pd2", "d3"));
+            new PawnMoves("c7", board).Should().BeEquivalentTo(Expected.Moves("pc7", "c6"));
+            new PawnMoves("d7", board).Should().BeEquivalentTo(Expected.Moves("pd7", "d6"));
         }
 
         [Test]
@@ -58,10 +58,10 @@ namespace MyFish.Tests.Moves
         {
             var board = TestBoard.With("Pa3 Pc5 pe6 pg5");
 
-            new PawnMoves("a3", board).Should().BeEquivalentTo(Expected.Moves("a4"));
-            new PawnMoves("c5", board).Should().BeEquivalentTo(Expected.Moves("c6"));
-            new PawnMoves("e6", board).Should().BeEquivalentTo(Expected.Moves("e5"));
-            new PawnMoves("g5", board).Should().BeEquivalentTo(Expected.Moves("g4"));
+            new PawnMoves("a3", board).Should().BeEquivalentTo(Expected.Moves("Pa3", "a4"));
+            new PawnMoves("c5", board).Should().BeEquivalentTo(Expected.Moves("Pc5", "c6"));
+            new PawnMoves("e6", board).Should().BeEquivalentTo(Expected.Moves("pe6", "e5"));
+            new PawnMoves("g5", board).Should().BeEquivalentTo(Expected.Moves("pg5", "g4"));
         }
 
         [Test]
@@ -80,8 +80,8 @@ namespace MyFish.Tests.Moves
         {
             var board = TestBoard.With("Pb3 pa4 pc4 pe6 Pd5 Pf5");
 
-            new PawnMoves("b3", board).Should().Contain(Expected.Moves("a4 c4"));
-            new PawnMoves("e6", board).Should().Contain(Expected.Moves("d5 f5"));
+            new PawnMoves("b3", board).Should().Contain(Expected.Moves("Pb3", "a4 c4"));
+            new PawnMoves("e6", board).Should().Contain(Expected.Moves("pe6", "d5 f5"));
         }
         
         [Test]
@@ -89,8 +89,8 @@ namespace MyFish.Tests.Moves
         {
             var board = TestBoard.With("Pb3 Pa4 Pc4 pe6 pd5 pf5");
 
-            new PawnMoves("b3", board).Should().NotContain(Expected.Moves("a4 c4"));
-            new PawnMoves("e6", board).Should().NotContain(Expected.Moves("d5 f5"));
+            new PawnMoves("b3", board).Should().NotContain(Expected.Moves("Pb3", "a4 c4"));
+            new PawnMoves("e6", board).Should().NotContain(Expected.Moves("pe6", "d5 f5"));
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace MyFish.Tests.Moves
         {
             var board = TestBoard.With("Pb5 pa5", "a6");
 
-            new PawnMoves("b5", board).Should().Contain(Expected.Moves("a6"));
+            new PawnMoves("b5", board).Should().Contain(Expected.Moves("Pb5", "a6"));
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace MyFish.Tests.Moves
         {
             var board = TestBoard.With("pe4 Pf4", "f3");
 
-            new PawnMoves("e4", board).Should().Contain(Expected.Moves("f3"));
+            new PawnMoves("e4", board).Should().Contain(Expected.Moves("pe4", "f3"));
         }
 
         [Test]

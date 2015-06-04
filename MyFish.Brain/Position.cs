@@ -60,7 +60,7 @@ namespace MyFish.Brain
 
         protected bool Equals(Position other)
         {
-            return (File == other.File && Rank == other.Rank) || (!IsValid && !other.IsValid);
+            return (other != null && File == other.File && Rank == other.Rank) || (other != null && !IsValid && !other.IsValid);
         }
 
         public override bool Equals(object obj)

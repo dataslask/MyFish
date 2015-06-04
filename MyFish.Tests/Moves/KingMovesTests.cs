@@ -13,7 +13,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_list_all_moves_on_an_empty_board()
         {
-            var expected = Expected.Moves("d6 e6 e5 e4 d4 c4 c5 c6");
+            var expected = Expected.Moves("Kd5", "d6 e6 e5 e4 d4 c4 c5 c6");
 
             var board = TestBoard.With("Kd5");
 
@@ -23,7 +23,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_not_move_outside_board()
         {
-            var expected = Expected.Moves("h7 g7 g8");
+            var expected = Expected.Moves("kh8", "h7 g7 g8");
 
             var board = TestBoard.With("kh8");
 
@@ -33,7 +33,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_take_opponent_pieces()
         {
-            var expected = Expected.Moves("d6 e6 e5 e4 d4 c4 c5 c6");
+            var expected = Expected.Moves("Kd5", "d6 e6 e5 e4 d4 c4 c5 c6");
 
             var board = TestBoard.With("Kd5 pe6 pd4 pc6");
 
@@ -43,7 +43,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_not_take_friendly_pieces()
         {
-            var expected = Expected.Moves("d6 e5 e4 c4 c5");
+            var expected = Expected.Moves("Kd5", "d6 e5 e4 c4 c5");
 
             var board = TestBoard.With("Kd5 Pe6 Pd4 Pc6");
 
@@ -65,7 +65,9 @@ namespace MyFish.Tests.Moves
              */
             var board = TestBoard.With("Kd5 pb6 ra4 re2 nf7 bg1");
 
-            new KingMoves("d5", board).ToArray().Should().Equal(Expected.Moves("c6"));
+            var moves = new KingMoves("d5", board).ToArray();
+
+            moves.Should().Equal(Expected.Moves("Kd5", "c6"));
         }
     }
 }

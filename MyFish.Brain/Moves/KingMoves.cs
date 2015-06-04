@@ -26,7 +26,11 @@ namespace MyFish.Brain.Moves
             {
                 var opponentPieces = Board.Pieces.Where(x => x.Color != FriendlyColor).ToArray();
 
-                var opponentMoves = opponentPieces.ToDictionary(x => x, x => Moves.For(x, Board, true));
+                var opponentMoves = opponentPieces.ToDictionary(x => x,
+                    x =>
+                    {
+                        return Moves.For(x, Board, true);
+                    });
 
                 var allOpponentMoves = opponentMoves.SelectMany(x => x.Value).ToArray();
 
@@ -39,7 +43,7 @@ namespace MyFish.Brain.Moves
             return Steps;
         }
 
-        public override IEnumerator<Position> GetEnumerator()
+        public override IEnumerator<Move> GetEnumerator()
         {
             return new KingMoves(StartingPosition, Board, _avoidCheck);
         }
