@@ -85,6 +85,12 @@ namespace MyFish.Tests.Scenarios
             new PawnMoves("d2", Board).Should().BeEquivalentTo(Expected.Moves("d3 d4"));
         }
 
+        [Test]
+        public void White_king_has_nowhere_to_go()
+        {
+            new KingMoves("e1", Board).Should().BeEmpty();
+        }
+
         [TestCase(typeof(Rook), Color.White, "a1")]
         [TestCase(typeof(Knight), Color.White, "b1")]
         [TestCase(typeof(Bishop), Color.White, "c1")]

@@ -46,7 +46,9 @@
     <Compile Include="IBoardBuilder.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Moves\BishopMoves.cs" />
+    <Compile Include="Moves\KingMoves.cs" />
     <Compile Include="Moves\KnightMoves.cs" />
+    <Compile Include="Moves\Moves.cs" />
     <Compile Include="Moves\PawnMoves.cs" />
     <Compile Include="Moves\QueenMoves.cs" />
     <Compile Include="Moves\SliderMoves.cs" />

@@ -40,5 +40,14 @@ namespace MyFish.Tests.Primitives
             (Position.Invalid == other).Should().BeTrue();
             (Position.Invalid != other).Should().BeFalse();
         }
+
+        [Test]
+        public void Operator_minus()
+        {
+            var d5 = new Position('d', 5);
+            var e4 = new Position('e', 4);
+
+            (d5 - e4).Should().Be(new Vector(-1, 1));
+        }
     }
 }

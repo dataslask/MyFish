@@ -32,6 +32,11 @@ namespace MyFish.Brain
             return position.IsValid ? new Position((char) (position.File + vector.X), position.Rank + vector.Y, false) : Invalid;
         }
 
+        public static Vector operator- (Position position, Position other)
+        {
+            return position.IsValid && other.IsValid? new Vector(position.File - other.File, position.Rank - other.Rank) : Vector.Invalid;
+        }
+
         private Position(char file, int rank, bool assertValid)
         {
             File = file;

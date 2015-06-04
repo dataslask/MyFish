@@ -2,6 +2,8 @@
 {
     public class Vector
     {
+        public static readonly Vector Invalid = new Vector(int.MaxValue, int.MinValue);
+
         public static readonly Vector North = new Vector(0, 1);
         public static readonly Vector NorthEast = new Vector(1, 1);
         public static readonly Vector East = new Vector(1, 0);
@@ -18,6 +20,42 @@
         {
             X = x;
             Y = y;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}, {1}]", X, Y);
+        }
+
+        protected bool Equals(Vector other)
+        {
+            return X == other.X && Y == other.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Vector) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (X*397) ^ Y;
+            }
+        }
+
+        public static bool operator ==(Vector left, Vector right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Vector left, Vector right)
+        {
+            return !Equals(left, right);
         }
     }
 }

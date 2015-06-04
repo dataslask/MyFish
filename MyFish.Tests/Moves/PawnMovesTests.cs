@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using FluentAssertions;
+using MyFish.Brain;
 using MyFish.Brain.Moves;
 using MyFish.Tests.Helpers;
 using NUnit.Framework;
@@ -107,5 +109,13 @@ namespace MyFish.Tests.Moves
             new PawnMoves("e4", board).Should().Contain(Expected.Moves("f3"));
         }
 
+        [Test]
+        public void Does_not_include_moves_when_testing_for_attacks_only()
+        {
+            var board = TestBoard.With("Pb3 pa4 pc4 pe6 Pd5 Pf5");
+
+            new PawnMoves("b3", board, true).Should().NotContain((Position)"b4");
+            new PawnMoves("e6", board, true).Should().NotContain((Position)"e5");
+        }
     }
 }
