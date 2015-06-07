@@ -59,5 +59,12 @@ namespace MyFish.Brain.Moves
 
             return piece != null && piece.Color != FriendlyColor;
         }
+
+        protected bool OpponentAt(Position position)
+        {
+            var piece = Board[position];
+
+            return piece != null && piece.Color != FriendlyColor;
+        }
     }
 }

@@ -10,6 +10,5 @@ namespace MyFish.Tests.Helpers
         {
             return string.Join(separator, moves.Select(x => x.Destination));
         }
-
     }
 }

@@ -1,5 +1,8 @@
+using System.Linq;
 using FluentAssertions;
+using MyFish.Brain;
 using MyFish.Brain.Moves;
+using MyFish.Brain.Pieces;
 using MyFish.Tests.Helpers;
 using NUnit.Framework;
 
@@ -21,7 +24,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_stop_when_taking_opponent_pices()
         {
-            var expected = Expected.Moves("Bd4", "e5 f6 c3 b2 c5 b6 e3 f2");
+            var expected = Expected.Moves("Bd4", "e5 xf6 c3 xb2 c5 xb6 e3 xf2");
 
             var board = TestBoard.With("Bd4 pf6 pb2 pb6 pf2");
 

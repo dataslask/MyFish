@@ -8,13 +8,15 @@ namespace MyFish.Brain
 
         public Piece Piece { get; private set; }
         public Position Destination { get; private set; }
+        public bool IsAttack { get; private set; }
 
         public bool IsValid { get { return Piece != null && Destination.IsValid; } }
 
-        public Move(Piece piece, Position destination)
+        public Move(Piece piece, Position destination, bool isAttack)
         {
             Piece = piece;
             Destination = destination;
+            IsAttack = isAttack;
         }
 
         private Move()
@@ -24,7 +26,7 @@ namespace MyFish.Brain
 
         public static Move operator +(Move move, Vector vector)
         {
-            return move.IsValid ? new Move(move.Piece, move.Destination + vector) : Invalid;
+            return move.IsValid ? new Move(move.Piece, move.Destination + vector, move.IsAttack) : Invalid;
         }
 
         public static Vector operator -(Move move, Position position)
@@ -34,12 +36,12 @@ namespace MyFish.Brain
 
         public override string ToString()
         {
-            return IsValid ? string.Format("{0}->{1}", Piece, Destination) : "xx9->x9";
+            return IsValid ? IsAttack ? string.Format("{0}=>{1}", Piece, Destination) : string.Format("{0}->{1}", Piece, Destination) : "xx9->x9";
         }
 
         protected bool Equals(Move other)
         {
-            return Equals(Piece, other.Piece) && Equals(Destination, other.Destination);
+            return Equals(Piece, other.Piece) && Equals(Destination, other.Destination) && IsAttack.Equals(other.IsAttack);
         }
 
         public override bool Equals(object obj)
@@ -54,7 +56,10 @@ namespace MyFish.Brain
         {
             unchecked
             {
-                return ((Piece != null ? Piece.GetHashCode() : 0)*397) ^ (Destination != null ? Destination.GetHashCode() : 0);
+                var hashCode = (Piece != null ? Piece.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (Destination != null ? Destination.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ IsAttack.GetHashCode();
+                return hashCode;
             }
         }
 

@@ -38,7 +38,9 @@ namespace MyFish.Brain.Moves
                 return TryNextVector();
             }
 
-            Current += _vector.Current;
+            var destination = Current.Destination + _vector.Current;
+
+            Current = new Move(Piece, destination, OpponentAt(destination));
 
             if (AtFriendly() || !Current.IsValid)
             {
@@ -51,7 +53,7 @@ namespace MyFish.Brain.Moves
         {
             if (_vector.MoveNext())
             {
-                Current = new Move(Piece, StartingPosition);
+                Current = new Move(Piece, StartingPosition, false);
 
                 _beforeStart = false;
 

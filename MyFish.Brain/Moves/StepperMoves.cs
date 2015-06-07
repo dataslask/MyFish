@@ -23,7 +23,9 @@ namespace MyFish.Brain.Moves
             }
             while (_step.MoveNext())
             {
-                Current = new Move(Piece, StartingPosition + _step.Current);
+                var destination = StartingPosition + _step.Current;
+                
+                Current = new Move(Piece, destination, OpponentAt(destination));
 
                 if (Current.Destination.IsValid && !AtFriendly())
                 {

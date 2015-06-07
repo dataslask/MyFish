@@ -58,9 +58,7 @@ namespace MyFish.Brain.Moves
 
         private bool OpponentAt(int x, int y)
         {
-            var piece = Board[StartingPosition + new Vector(x, y)];
-
-            return piece != null && piece.Color != FriendlyColor;
+            return OpponentAt(StartingPosition + new Vector(x, y));
         }
 
         public override IEnumerator<Move> GetEnumerator()

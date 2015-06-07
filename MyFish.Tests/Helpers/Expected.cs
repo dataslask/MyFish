@@ -8,7 +8,17 @@ namespace MyFish.Tests.Helpers
     {
         public static IEnumerable<Move> Moves(string piece, string positions)
         {
-            return positions.Split(' ').Select(x => new Move(CreatePiece(piece), x));
+            return positions.Split(' ').Select(x => new Move(CreatePiece(piece), Destination(x), IsAttack(x)));
+        }
+
+        private static bool IsAttack(string destination)
+        {
+            return destination.StartsWith("x");
+        }
+
+        private static string Destination(string destination)
+        {
+            return IsAttack(destination) ? destination.Substring(1) : destination;
         }
 
         private static Piece CreatePiece(string encodedPiece)

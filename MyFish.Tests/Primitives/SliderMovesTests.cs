@@ -53,6 +53,16 @@ namespace MyFish.Tests.Primitives
         }
         
         [Test]
+        public void Only_the_last_move_should_be_an_attack_when_taking_opponent_pice()
+        {
+            var board = TestBoard.With("Ra1 pa7");
+
+            var attacks = new SliderMoves<Rook>("a1", board, Vector.North).Attacks();
+
+            attacks.Single().Destination.Should().Be((Position) "a7");
+        }
+        
+        [Test]
         public void Should_stop_in_front_of_friendly_pices()
         {
             var board = TestBoard.With("ra1 pa7");
