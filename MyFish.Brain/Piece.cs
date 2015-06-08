@@ -66,6 +66,11 @@ namespace MyFish.Brain
         {
             return !Equals(left, right);
         }
+
+        public Piece Move(Position destination)
+        {
+            return PieceFacory.Create(ColoredType, destination);
+        }
     }
 
 

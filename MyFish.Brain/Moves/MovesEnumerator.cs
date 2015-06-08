@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyFish.Brain.Exceptions;
 
 namespace MyFish.Brain.Moves
 {
@@ -20,7 +21,7 @@ namespace MyFish.Brain.Moves
 
             if (piece == null)
             {
-                throw new ArgumentException(string.Format("No piece at {0}", position));
+                throw new PieceNotFoundException(string.Format("No piece at {0}", position));
             }
 
             Piece = piece.As<T>();

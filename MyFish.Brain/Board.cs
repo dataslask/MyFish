@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using MyFish.Brain.Exceptions;
+using MyFish.Brain.Pieces;
 
 namespace MyFish.Brain
 {
@@ -14,7 +17,7 @@ namespace MyFish.Brain
         }
 
         private readonly Piece[] _pieces;
- 
+
         public Color Turn { get; private set; }
         public Position EnPassantTarget { get; private set; }
 
@@ -46,14 +49,50 @@ namespace MyFish.Brain
             return new Board.Builder();
         }
 
-        public Board Next(Move move)
-        {
-            return null;
-        }
-
         public bool Can(Castle castle, Color white)
         {
             return true;
+        }
+
+        public Board Move(string encodedMove)
+        {
+            if (encodedMove.Length != 5)
+            {
+                throw new ParseMoveException(string.Format("Don't understand move: {0}", encodedMove));
+            }
+            var encodedPiece = encodedMove.Substring(0, 3);
+
+            var destination = encodedMove.Substring(3);
+
+            var piece = PieceFacory.Create(encodedPiece);
+
+            return Move(piece, destination);
+        }
+
+        private Board Move(Piece piece, Position destination)
+        {
+            if (piece.Color != Turn)
+            {
+                throw new WrongTurnException(string.Format("{0} cannot move because it is {1}s turn", piece, Turn));
+            }
+            var moves = Moves.Moves.For(piece, this, false);
+
+            var move = moves.SingleOrDefault(x => x.Destination == destination);
+
+            if (move == null)
+            {
+                throw new IllegalMoveException(string.Format("{0} cannot move to {1}", piece, destination));
+            }
+            var pieces = Pieces.Where(x => x != piece && x.Position != destination);
+
+            var movedPiece = piece.Move(destination);
+            
+            return new Board(pieces.Concat(new[] { movedPiece }), NextTurn(), null);
+        }
+
+        private Color NextTurn()
+        {
+            return Turn == Color.White ? Color.Black : Color.White;
         }
     }
 }

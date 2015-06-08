@@ -16,16 +16,17 @@ namespace MyFish.Brain
             {'p', (position, color) => new Pawn(position, color)}
         };
 
+        public static Piece Create(string encodedPiece)
+        {
+            return Create(encodedPiece[0], encodedPiece.Substring(1));            
+        }
+
         public static Piece Create(char coloredType, Position position)
         {
             var color = coloredType < 'a' ? Color.White : Color.Black;
 
             var type = color == Color.White ? char.ToLower(coloredType) : coloredType;
 
-            if (!Factory.ContainsKey(type))
-            {
-                throw new ArgumentOutOfRangeException("coloredType", string.Format("Don't know how to create pieces of type '{0}'", type));
-            }
             return Factory[type](position, color);
         }
 

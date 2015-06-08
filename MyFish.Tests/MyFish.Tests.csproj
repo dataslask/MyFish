@@ -54,9 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoardTests.cs" />
     <Compile Include="Helpers\MovesAttacsExtension.cs" />
     <Compile Include="Helpers\MovesJoinExtension.cs" />
     <Compile Include="Moves\KingMovesTests.cs" />
+    <Compile Include="Scenarios\After_white_takes_pawn_in_second_move.cs" />
+    <Compile Include="Scenarios\When_moving_white_knight_on_initial_board.cs" />
     <Compile Include="Web\AutoMapper.cs" />
     <Compile Include="Web\AutoMapperTests.cs" />
     <Compile Include="Helpers\Expected.cs" />

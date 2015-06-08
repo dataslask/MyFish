@@ -31,7 +31,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_take_opponent_pieces()
         {
-            var expected = Expected.Moves("nd4", "c6 e6 c2 e2 b3 b5 f3 f5");
+            var expected = Expected.Moves("nd4", "c6 xe6 c2 e2 b3 xb5 f3 f5");
 
             var board = TestBoard.With("nd4 Pe6 Rb5");
 

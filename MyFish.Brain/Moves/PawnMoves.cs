@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyFish.Brain.Exceptions;
 using MyFish.Brain.Pieces;
 
 namespace MyFish.Brain.Moves
@@ -14,7 +15,7 @@ namespace MyFish.Brain.Moves
             _attacksOnly = attacksOnly;
             if (position.Rank == 1 || position.Rank == 8)
             {
-                throw new ArgumentException(string.Format("{0} pawn cannot be at at {1}", FriendlyColor, position));                
+                throw new IllegalPawnPositionException(string.Format("{0} pawn cannot be at at {1}", FriendlyColor, position));                
             }
         }
 

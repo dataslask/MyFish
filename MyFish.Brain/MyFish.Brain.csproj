@@ -42,6 +42,12 @@
     <Compile Include="Board.cs" />
     <Compile Include="Castle.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="Exceptions\ClientFaultException.cs" />
+    <Compile Include="Exceptions\IllegalMoveException.cs" />
+    <Compile Include="Exceptions\IllegalPawnPositionException.cs" />
+    <Compile Include="Exceptions\ParseMoveException.cs" />
+    <Compile Include="Exceptions\PieceNotFoundException.cs" />
+    <Compile Include="Exceptions\WrongTurnException.cs" />
     <Compile Include="Fen.cs" />
     <Compile Include="IBoardBuilder.cs" />
     <Compile Include="Move.cs" />

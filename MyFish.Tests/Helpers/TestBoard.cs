@@ -5,11 +5,11 @@ namespace MyFish.Tests.Helpers
 {
     public static class TestBoard
     {
-        public static Board With(string pieceList, Position enPassantTarget = null)
+        public static Board With(string pieceList, Position enPassantTarget = null, Color turn = Color.White)
         {
             var pieces = pieceList.Split(' ').Where(x => !string.IsNullOrEmpty(x)).Select(CreatePiece);
 
-            return Board.GetBuilder().Build(pieces, Color.White, enPassantTarget);
+            return Board.GetBuilder().Build(pieces, turn, enPassantTarget);
         }
 
         private static Piece CreatePiece(string encodedPiece)

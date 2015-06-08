@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using MyFish.Brain;
+using MyFish.Brain.Exceptions;
 using MyFish.Brain.Moves;
 using MyFish.Tests.Helpers;
 using NUnit.Framework;
@@ -16,10 +17,10 @@ namespace MyFish.Tests.Moves
         {
             var board = TestBoard.With("Pb1 Pb8 pc8 pc1");
 
-            ((Action)(() => { new PawnMoves("b1", board); })).ShouldThrow<ArgumentException>("white pawn cannot be at rank 1 because it starts at rank 2");
-            ((Action)(() => { new PawnMoves("b8", board); })).ShouldThrow<ArgumentException>("white pawn cannot be at rank 8 because it should have been promoted");
-            ((Action)(() => { new PawnMoves("c8", board); })).ShouldThrow<ArgumentException>("black pawn cannot be at rank 8 because it starts at rank 7");
-            ((Action)(() => { new PawnMoves("c1", board); })).ShouldThrow<ArgumentException>("black pawn cannot be at rank 1 because it should have been promoted");
+            ((Action)(() => { new PawnMoves("b1", board); })).ShouldThrow<IllegalPawnPositionException>("white pawn cannot be at rank 1 because it starts at rank 2");
+            ((Action)(() => { new PawnMoves("b8", board); })).ShouldThrow<IllegalPawnPositionException>("white pawn cannot be at rank 8 because it should have been promoted");
+            ((Action)(() => { new PawnMoves("c8", board); })).ShouldThrow<IllegalPawnPositionException>("black pawn cannot be at rank 8 because it starts at rank 7");
+            ((Action)(() => { new PawnMoves("c1", board); })).ShouldThrow<IllegalPawnPositionException>("black pawn cannot be at rank 1 because it should have been promoted");
         }
 
         [Test]
@@ -80,8 +81,8 @@ namespace MyFish.Tests.Moves
         {
             var board = TestBoard.With("Pb3 pa4 pc4 pe6 Pd5 Pf5");
 
-            new PawnMoves("b3", board).Should().Contain(Expected.Moves("Pb3", "a4 c4"));
-            new PawnMoves("e6", board).Should().Contain(Expected.Moves("pe6", "d5 f5"));
+            new PawnMoves("b3", board).Should().Contain(Expected.Moves("Pb3", "xa4 xc4"));
+            new PawnMoves("e6", board).Should().Contain(Expected.Moves("pe6", "xd5 xf5"));
         }
         
         [Test]

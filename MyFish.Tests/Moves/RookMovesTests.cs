@@ -23,7 +23,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Should_stop_when_taking_opponent_pices()
         {
-            var expected = Expected.Moves("Rd4", "d5 d6 d7 d3 d2 e4 f4 g4 c4 b4");
+            var expected = Expected.Moves("Rd4", "d5 d6 xd7 d3 xd2 e4 f4 xg4 c4 xb4");
 
             var board = TestBoard.With("Rd4 pd2 pd7 pb4 pg4");
 

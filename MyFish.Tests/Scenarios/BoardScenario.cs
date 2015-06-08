@@ -8,7 +8,7 @@ namespace MyFish.Tests.Scenarios
     {
         private static class No
         {
-            public static IEnumerable<Move> Moves { get { return new Move[0]; } }
+            public static IEnumerable<string> Moves { get { return new string[0]; } }
         }
 
         protected Board Board;
@@ -20,13 +20,13 @@ namespace MyFish.Tests.Scenarios
 
             foreach (var move in Given())
             {
-                board.Next(move);
+                board = board.Move(move);
             }
 
             Board = When(board);
         }
 
-        protected virtual IEnumerable<Move> Given()
+        protected virtual IEnumerable<string> Given()
         {
             return No.Moves;
         }

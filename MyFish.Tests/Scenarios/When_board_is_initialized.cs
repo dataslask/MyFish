@@ -126,8 +126,8 @@ namespace MyFish.Tests.Scenarios
         public void The_pieces_should_be_correctly_placed(Type type, Color color, string position)
         {
             var piece = Board[position];
-           
-            piece.Should().NotBeNull();
+
+            piece.Should().NotBeNull("there should be a {0} {1} at {2}", color, type.Name, position);
             piece.Position.Should().Be((Position)position);
             piece.Color.Should().Be(color);
         }
