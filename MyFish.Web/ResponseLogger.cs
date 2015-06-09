@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Owin;
@@ -37,16 +38,15 @@ namespace MyFish.Web
 
                 buffer.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new StreamReader(buffer))
+                using (var reader = new StreamReader(buffer, true))
                 {
                     var body = await reader.ReadToEndAsync();
-
                     Console.WriteLine(body);
+                    Console.WriteLine();
 
                     buffer.Seek(0, SeekOrigin.Begin);
                     await buffer.CopyToAsync(bodyStream);
                 }
-                Console.WriteLine();
             }
         }
     }

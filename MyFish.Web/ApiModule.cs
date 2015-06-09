@@ -1,5 +1,5 @@
+using System;
 using MyFish.Brain;
-using MyFish.Web.Contracts;
 using MyFish.Web.Contracts.Commands;
 using Nancy;
 using Nancy.ModelBinding;
@@ -19,6 +19,11 @@ namespace MyFish.Web
                 _board = Fen.Init();
                 
                 return Response.AsJsonDto(_board);
+            };
+
+            Get["/fail"] = _ =>
+            {
+                throw new Exception("Shit!");
             };
 
             Post["/move"] = parameters =>

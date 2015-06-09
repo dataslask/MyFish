@@ -81,8 +81,8 @@ app.controller('BoardController', ['$http', '_', function ($http, _) {
         var moveCommand = { piece: piece, destination: destination };
         $http.post("api/move", moveCommand).success(function(data, status) {
             self.rows = makeRows(data);
-        }).error(function(status, data) {
-            alert('Error: ' + status + ' ' + data);
+        }).error(function(data) {
+            alert(data.message);
         });
     }
 

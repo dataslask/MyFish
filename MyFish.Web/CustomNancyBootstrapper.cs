@@ -1,51 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using MyFish.Brain.Exceptions;
 using Nancy;
 using Nancy.Bootstrapper;
-using Nancy.ErrorHandling;
-using Nancy.Responses;
-using Nancy.Responses.Negotiation;
+using Nancy.Extensions;
 using Nancy.TinyIoc;
+using Newtonsoft.Json;
 
 namespace MyFish.Web
 {
     public class CustomNancyBootstrapper : DefaultNancyBootstrapper
     {
+        private static readonly string InternalServerError = HttpStatusCode.InternalServerError.ToString();
+
+        protected override void ConfigureApplicationContainer(TinyIoCContainer container)
+        {
+            base.ConfigureApplicationContainer(container);
+
+            container.Register<JsonSerializer, CustomJsonSerializer>();
+        }
+
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             AutoMapper.Configure();
+
+            pipelines.OnError.AddItemToEndOfPipeline(HandleError);
         }
-    }
 
-
-    public class MyStatusCodeHandler : IStatusCodeHandler
-    {
-        public bool HandlesStatusCode(HttpStatusCode statusCode, NancyContext context)
+        private Response HandleError(NancyContext context, Exception exception)
         {
-            if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.NoContent)
+            if (context.AcceptsJson())
             {
-                return false;
+                var clientFault = exception is ClientFaultException;
+
+                var statusCode = clientFault ? HttpStatusCode.BadRequest : HttpStatusCode.InternalServerError;
+                var message = clientFault ? exception.Message : InternalServerError;
+              
+                return context.Request.IsLocal()
+                    ? new ErrorResponse(message, statusCode, exception)
+                    : new ErrorResponse(message, statusCode);
             }
-            var enumerable = context.Request.Headers.Accept;
-
-            var ranges = enumerable.OrderByDescending(o => o.Item2).Select(o => new MediaRange(o.Item1)).ToList();
-            foreach (var item in ranges)
-            {
-                if (item.Matches("application/json"))
-                    return true;
-                if (item.Matches("text/json"))
-                    return true;
-                if (item.Matches("text/html"))
-                    return false;
-            }
-
-            return false;
-        }
-
-        public void Handle(HttpStatusCode statusCode, NancyContext context)
-        {          
-            context.Response = new JsonResponse("crap", new DefaultJsonSerializer()).WithStatusCode(statusCode);
+            return null;
         }
     }
 }
