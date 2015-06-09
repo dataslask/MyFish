@@ -27,7 +27,6 @@ app.controller('BoardController', ['$http', '_', function ($http, _) {
 
     var fileA = 'a'.charCodeAt(0);
 
-
     function enumFiles() {
         return _.map(_.range(8), function (x) { return String.fromCharCode(fileA + x); });
     }
@@ -35,39 +34,59 @@ app.controller('BoardController', ['$http', '_', function ($http, _) {
     function enumRanks() {
         return _.range(8, 0, -1);
     }
-
-    function Piece(piece) {
-        
+    
+    function Piece(file, rank, piece) {
+        var self = this;
+        self.file = file;
+        self.rank = rank;
+        self.type = piece.type;
+        self.color = piece.color;
     }
 
     function Cell(file, rank, pieces) {
         var self = this;
 
         self.file = file;
-        self.piece = pieces[file.charCodeAt(0) - fileA];
+        self.rank = rank;
+
+        var piece = _.find(pieces, function(x) {
+            return x.position.file === file && x.position.rank === rank;
+        });
+        self.piece = piece;
         self.isBlack =  (rank % 2 + file.charCodeAt()) % 2 == 0;
     }
 
-    function Rank(rank, pieces) {
+    function Row(rank, pieces) {
         var self = this;
 
-        self.number = rank;
-        self.files = _.map(enumFiles(), function(file) {
+        self.rank = rank;
+        self.columns = _.map(enumFiles(), function(file) {
             return new Cell(file, rank, pieces);
         });
     }
 
+    function makeRows(data) {
+        return _.map(enumRanks(), function(rank) {
+            return new Row(rank, data.pieces);
+        });
+    }
 
     var self = this;
 
     self.enumFiles = enumFiles();
 
-    self.pieces = null;
-
     self.selectedPiece = null;
 
-    self.selectPiece = function(piece) {
+    function movePiece(piece, destination) {
+        var moveCommand = { piece: piece, destination: destination };
+        $http.post("api/move", moveCommand).success(function(data, status) {
+            self.rows = makeRows(data);
+        }).error(function(status, data) {
+            alert('Error: ' + status + ' ' + data);
+        });
+    }
 
+    function selectPiece(piece) {
         if (self.selectedPiece) {
             self.selectedPiece.selected = false;
         }
@@ -75,14 +94,21 @@ app.controller('BoardController', ['$http', '_', function ($http, _) {
             piece.selected = true;
         }
         self.selectedPiece = piece;
+    }
+
+    self.click = function(cell) {
+
+        if (self.selectedPiece && (!cell.piece || cell.piece.color !== self.selectedPiece.color)) {
+            movePiece(self.selectedPiece, cell);
+            selectPiece(null);
+        }
+        else {
+            selectPiece(self.selectedPiece != cell.piece ? cell.piece : null);
+        }
     };
 
     $http.get("api/init").success(function (data) {
-        self.pieces = data.pieces;
-
-        self.ranks = _.map(enumRanks(), function(rank) {
-            return new Rank(rank, data.pieces[rank - 1]);
-        });
+        self.rows = makeRows(data);
     });
 }]);
 
@@ -103,6 +129,6 @@ app.filter('piece', [function () {
     };
     return function (piece) {
         var key = piece != null ? piece.color + '-' + piece.type : null;
-        return map[key] || key;
+        return map[key] || null;
     };
 }]);

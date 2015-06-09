@@ -69,7 +69,7 @@ namespace MyFish.Brain
             return Move(piece, destination);
         }
 
-        private Board Move(Piece piece, Position destination)
+        public Board Move(Piece piece, Position destination)
         {
             if (piece.Color != Turn)
             {

@@ -39,23 +39,13 @@ namespace MyFish.Tests.Web
         [Test]
         public void Should_map_board_correctly()
         {
-            var board = TestBoard.With("Pb2");
+            var board = TestBoard.With("Pb2 re5");
 
             var dto = Mapper.Map<MyFish.Web.Contracts.Board>(board);
 
-            dto.Pieces.Sum(x => x.Length).Should().Be(64);
+            dto.Pieces.Length.Should().Be(2);
 
-            for (var i = 0; i < 8; i++)
-            {
-                for (var j = 0; j < 8; j++)
-                {
-                    if (!(i == 1 && j == 1))
-                    {
-                        dto.Pieces[i][j].Should().BeNull("there should be no piece at {0}{1}", (char)('a' + j), i + 1);
-                    }
-                }
-            }
-            var piece = dto.Pieces[1][1];
+            var piece = dto.Pieces[0];
 
             piece.Should().NotBeNull();
             piece.Type.Should().Be("pawn");

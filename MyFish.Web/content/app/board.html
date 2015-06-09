@@ -1,9 +1,9 @@
 ﻿<div class="board">
     <table>
-        <tr ng-repeat="rank in board.ranks">
-            <td class="legend">{{rank.number}}</td>
-            <td ng-repeat="cell in rank.files" ng-class="cell.isBlack ? 'black' : 'white'">
-                <span class="piece" ng-class="{selected: cell.piece.selected}" ng-click="board.selectPiece(cell.piece)">{{cell.piece | piece}}</span>
+        <tr ng-repeat="row in board.rows">
+            <td class="legend">{{row.rank}}</td>
+            <td ng-repeat="cell in row.columns" ng-class="cell.isBlack ? 'black' : 'white'" ng-click="board.click(cell)">
+                <span class="piece" ng-class="{selected: cell.piece.selected}">{{cell.piece | piece}}</span>
             </td>
         </tr>
         <tr class="legend">
