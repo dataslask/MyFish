@@ -35,7 +35,7 @@ namespace MyFish.Tests.Moves
         {
             var expected = Expected.Moves("Kd5", "d6 xe6 e5 e4 xd4 c4 c5 xc6");
 
-            var board = TestBoard.With("Kd5 pe6 pd4 pc6");
+            var board = TestBoard.With("Kd5 pe6 pd4 pc6 ke8");
 
             new KingMoves("d5", board).Should().BeEquivalentTo(expected);
         }
@@ -53,7 +53,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Cannot_put_it_self_in_chess()
         {
-            /* 8| | | | | | | | |
+            /* 8| | | | |k| | | |
              * 7| | | | | |n| | |
              * 6| |p| | | | | | |
              * 5| | | |K| | | | |
@@ -63,11 +63,45 @@ namespace MyFish.Tests.Moves
              * 1| | | | | | |b| |
              *   A B C D E F G H
              */
-            var board = TestBoard.With("Kd5 pb6 ra4 re2 nf7 bg1");
+            var board = TestBoard.With("Kd5 pb6 ra4 re2 nf7 bg1 ke8");
 
-            var moves = new KingMoves("d5", board).ToArray();
+            new KingMoves("d5", board).Should().Equal(Expected.Moves("Kd5", "c6"));
+        }
+        
+        [Test]
+        public void Must_avoid_check()
+        {
+            /* 8| | | | |k| | | |
+             * 7| | | | | |n| | |
+             * 6| |p| | | | | | |
+             * 5| | | |K| | | | |
+             * 4|r| | | | | | | |
+             * 3| | | | | | | | |
+             * 2| | | | |r| | | |
+             * 1| | | | | | |b| |
+             *   A B C D E F G H
+             */
+            var board = TestBoard.With("Kd5 pb6 ra4 re2 nf7 bg1 ke8");
 
-            moves.Should().Equal(Expected.Moves("Kd5", "c6"));
+            new KingMoves("d5", board).Should().Equal(Expected.Moves("Kd5", "c6"));
+        }
+        
+        [Test]
+        public void Must_move_out_of_check()
+        {
+            /* 8| | | | |k| | | |
+             * 7| |p| | | |n| | |
+             * 6| | |p| | | | | |
+             * 5| | | |K| | | | |
+             * 4|r| | | | | | | |
+             * 3| | | | | | | | |
+             * 2| | | | |r| | | |
+             * 1| | | | | | | | |
+             *   A B C D E F G H
+             */
+            var board = TestBoard.With("Kd5 pb7 pc6 ra4 re2 nf7 ke8");
+
+            new KingMoves("d5", board).Should().Equal(Expected.Moves("Kd5", "c5"));
         }
     }
 }

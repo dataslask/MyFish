@@ -8,7 +8,6 @@ namespace MyFish.Web
         public CustomJsonSerializer()
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver();
-            Formatting = Formatting.Indented;
         }
     }
 }

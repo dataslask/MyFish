@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MyFish.Brain.Exceptions;
 
 namespace MyFish.Brain.Moves
@@ -9,13 +10,17 @@ namespace MyFish.Brain.Moves
     {
         protected readonly Position StartingPosition;
         protected readonly Board Board;
+        protected readonly bool AvoidCheck;
         protected readonly Color FriendlyColor;
         protected readonly T Piece;
 
-        protected MovesEnumerator(Position position, Board board)
+        protected Color OpponentColor { get { return FriendlyColor == Color.White ? Color.Black : Color.White; } }
+
+        protected MovesEnumerator(Position position, Board board, bool avoidCheck)
         {
             StartingPosition = position;
             Board = board;
+            AvoidCheck = avoidCheck;
 
             var piece = Board[position];
 
@@ -66,6 +71,17 @@ namespace MyFish.Brain.Moves
             var piece = Board[position];
 
             return piece != null && piece.Color != FriendlyColor;
+        }
+
+        protected bool UnderCheck()
+        {
+            var board = Board.Do(Current);
+
+            var king = board.KingOf(FriendlyColor);
+
+            var positions = board.PositionsCoveredBy(OpponentColor);
+
+            return positions.Contains(king.Position);
         }
     }
 }

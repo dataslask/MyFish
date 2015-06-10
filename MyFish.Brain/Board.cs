@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using MyFish.Brain.Exceptions;
+using MyFish.Brain.Moves;
 using MyFish.Brain.Pieces;
 
 namespace MyFish.Brain
@@ -24,6 +25,17 @@ namespace MyFish.Brain
         public IEnumerable<Piece> Pieces { get { return _pieces; } }
         public IEnumerable<Piece> WhitePieces { get { return _pieces.Where(x => x.Color == Color.White); } }
         public IEnumerable<Piece> BlackPieces { get { return _pieces.Where(x => x.Color == Color.Black); } }
+
+        public King KingOf(Color color)
+        {
+            var king = Pieces.OfType<King>().SingleOrDefault(x => x.Color == color);
+
+            if (king == null)
+            {
+                throw new MissingKingException(string.Format("{0} is missing the king", color));
+            }
+            return king;
+        }
 
         public IEnumerable<T> White<T>() where T : Piece
         {
@@ -75,7 +87,7 @@ namespace MyFish.Brain
             {
                 throw new WrongTurnException(string.Format("{0} cannot move because it is {1}s turn", piece, Turn));
             }
-            var moves = Moves.Moves.For(piece, this, false);
+            var moves = this.MovesFor(piece);
 
             var move = moves.SingleOrDefault(x => x.Destination == destination);
 
@@ -83,10 +95,15 @@ namespace MyFish.Brain
             {
                 throw new IllegalMoveException(string.Format("{0} cannot move to {1}", piece, destination));
             }
-            var pieces = Pieces.Where(x => x != piece && x.Position != destination);
+            return Do(move);
+        }
 
-            var movedPiece = piece.Move(destination);
-            
+        internal Board Do(Move move)
+        {
+            var pieces = Pieces.Where(x => x != move.Piece && x.Position != move.Destination);
+
+            var movedPiece = move.Piece.Move(move.Destination);
+
             return new Board(pieces.Concat(new[] { movedPiece }), NextTurn(), null);
         }
 

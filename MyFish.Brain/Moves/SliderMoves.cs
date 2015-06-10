@@ -11,13 +11,13 @@ namespace MyFish.Brain.Moves
 
         private bool _beforeStart;
 
-        public SliderMoves(Position position, Board board, params Vector[] vectors)
-            : this(position, board, vectors.ToList())
+        public SliderMoves(Position position, Board board, bool avoidCheck, params Vector[] vectors)
+            : this(position, board, avoidCheck, vectors.ToList())
         {
         }
 
-        private SliderMoves(Position position, Board board, List<Vector> vectors)
-            : base(position, board)
+        private SliderMoves(Position position, Board board, bool avoidCheck, List<Vector> vectors)
+            : base(position, board, avoidCheck)
         {
             _beforeStart = true;
 
@@ -27,11 +27,25 @@ namespace MyFish.Brain.Moves
         }
 
         private SliderMoves(SliderMoves<T> other)
-            : this(other.StartingPosition, other.Board, other._vectors)
+            : this(other.StartingPosition, other.Board, other.AvoidCheck, other._vectors)
         {
         }
 
         public override bool MoveNext()
+        {
+            while (TryMoveNext())
+            {
+                if (Current.Destination.IsValid&& !(AvoidCheck && UnderCheck()))
+                {
+                    return true;
+                }
+            }
+            Current = Move.Invalid;
+
+            return false;
+        }
+
+        private bool TryMoveNext()
         {
             if (_beforeStart || AtOpponent())
             {

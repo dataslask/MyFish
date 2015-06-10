@@ -45,6 +45,7 @@
     <Compile Include="Exceptions\ClientFaultException.cs" />
     <Compile Include="Exceptions\IllegalMoveException.cs" />
     <Compile Include="Exceptions\IllegalPawnPositionException.cs" />
+    <Compile Include="Exceptions\MissingKingException.cs" />
     <Compile Include="Exceptions\ParseMoveException.cs" />
     <Compile Include="Exceptions\PieceNotFoundException.cs" />
     <Compile Include="Exceptions\WrongTurnException.cs" />

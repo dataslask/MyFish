@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using MyFish.Brain;
@@ -26,7 +27,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Can_double_step_from_start_if_not_blocked()
         {
-            var board = TestBoard.With("Pb2 pb7");
+            var board = TestBoard.With("Pb2 pb7 ke8 Ke1");
 
             new PawnMoves("b2", board).Should().BeEquivalentTo(Expected.Moves("Pb2", "b3 b4"), "white pawn is not blocked");
             new PawnMoves("b7", board).Should().BeEquivalentTo(Expected.Moves("pb7", "b6 b5"), "black pawn is not blocked");
@@ -46,7 +47,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Cannot_double_step_if_second_step_is_blocked()
         {
-            var board = TestBoard.With("Pc2 Qc4 Pd2 pd4 pc7 qc5 pd7 Pd5");
+            var board = TestBoard.With("Pc2 Qc4 Pd2 pd4 pc7 qc5 pd7 Pd5 Ke1 ke8");
 
             new PawnMoves("c2", board).Should().BeEquivalentTo(Expected.Moves("Pc2", "c3"));
             new PawnMoves("d2", board).Should().BeEquivalentTo(Expected.Moves("Pd2", "d3"));
@@ -57,7 +58,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Moves_forward_only_one_step_on_other_ranks()
         {
-            var board = TestBoard.With("Pa3 Pc5 pe6 pg5");
+            var board = TestBoard.With("Pa3 Pc5 pe6 pg5 Ke1 ke8");
 
             new PawnMoves("a3", board).Should().BeEquivalentTo(Expected.Moves("Pa3", "a4"));
             new PawnMoves("c5", board).Should().BeEquivalentTo(Expected.Moves("Pc5", "c6"));
@@ -79,7 +80,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Can_take_opponent_left_and_right()
         {
-            var board = TestBoard.With("Pb3 pa4 pc4 pe6 Pd5 Pf5");
+            var board = TestBoard.With("Pb3 pa4 pc4 pe6 Pd5 Pf5 Ke1 ke8");
 
             new PawnMoves("b3", board).Should().Contain(Expected.Moves("Pb3", "xa4 xc4"));
             new PawnMoves("e6", board).Should().Contain(Expected.Moves("pe6", "xd5 xf5"));
@@ -88,7 +89,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Will_not_take_firendly_left_or_right()
         {
-            var board = TestBoard.With("Pb3 Pa4 Pc4 pe6 pd5 pf5");
+            var board = TestBoard.With("Pb3 Pa4 Pc4 pe6 pd5 pf5 Ke1 ke8");
 
             new PawnMoves("b3", board).Should().NotContain(Expected.Moves("Pb3", "a4 c4"));
             new PawnMoves("e6", board).Should().NotContain(Expected.Moves("pe6", "d5 f5"));
@@ -97,7 +98,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Can_take_opponent_en_passant_left()
         {
-            var board = TestBoard.With("Pb5 pa5", "a6");
+            var board = TestBoard.With("Pb5 pa5 Ke1", "a6");
 
             new PawnMoves("b5", board).Should().Contain(Expected.Moves("Pb5", "a6"));
         }
@@ -105,7 +106,7 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Can_take_opponent_en_passant_right()
         {
-            var board = TestBoard.With("pe4 Pf4", "f3");
+            var board = TestBoard.With("pe4 Pf4 ke8", "f3");
 
             new PawnMoves("e4", board).Should().Contain(Expected.Moves("pe4", "f3"));
         }
@@ -113,10 +114,33 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Does_not_include_moves_when_testing_for_attacks_only()
         {
-            var board = TestBoard.With("Pb3 pa4 pc4 pe6 Pd5 Pf5");
+            var board = TestBoard.With("Pb3 pa4 pc4 pe6 Pd5 Pf5 Ke1 ke8");
 
-            new PawnMoves("b3", board, true).Should().NotContain((Position)"b4");
-            new PawnMoves("e6", board, true).Should().NotContain((Position)"e5");
+            new PawnMoves("b3", board).Should().NotContain((Position)"b4");
+            new PawnMoves("e6", board).Should().NotContain((Position)"e5");
         }
+
+        [Test]
+        public void Must_save_the_queen()
+        {
+            /* 8| | | | | | | | |
+             * 7| | | | | | | | |
+             * 6| | | | | | | | |
+             * 5| | | | | | | | |
+             * 4| | | | | | | | |
+             * 3|r| | |K| | | | |
+             * 2| |P|P| | |P| | |
+             * 1| | | | | | | | |
+             *   A B C D E F G H
+             */
+            var board = TestBoard.With("Kd3 Pb2 Pc2 Pf2 ra3");
+
+            var moves = new PawnMoves("c2", board).Concat(new PawnMoves("f2", board)).Concat(new PawnMoves("b2", board));
+
+            var expected = Expected.Moves("Pc2", "c3").Concat(Expected.Moves("Pb2", "xa3 b3"));
+
+            moves.Should().BeEquivalentTo(expected);
+        }
+
     }
 }

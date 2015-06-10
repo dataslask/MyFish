@@ -9,8 +9,8 @@ namespace MyFish.Brain.Moves
         private List<Vector> _steps;
         private IEnumerator<Vector> _step;
 
-        protected StepperMoves(Position position, Board board)
-            : base(position, board)
+        protected StepperMoves(Position position, Board board, bool avoidCheck)
+            : base(position, board, avoidCheck)
         {
         }
 
@@ -27,7 +27,7 @@ namespace MyFish.Brain.Moves
                 
                 Current = new Move(Piece, destination, OpponentAt(destination));
 
-                if (Current.Destination.IsValid && !AtFriendly())
+                if (Current.Destination.IsValid && !AtFriendly() && !(AvoidCheck && UnderCheck()))
                 {
                     return true;
                 }

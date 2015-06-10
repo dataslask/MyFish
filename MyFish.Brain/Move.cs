@@ -36,7 +36,7 @@ namespace MyFish.Brain
 
         public override string ToString()
         {
-            return IsValid ? IsAttack ? string.Format("{0}=>{1}", Piece, Destination) : string.Format("{0}->{1}", Piece, Destination) : "xx9->x9";
+            return IsValid ? IsAttack ? string.Format("{0}x{1}", Piece, Destination) : string.Format("{0}{1}", Piece, Destination) : "xx9xx9";
         }
 
         protected bool Equals(Move other)

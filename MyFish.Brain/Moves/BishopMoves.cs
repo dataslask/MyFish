@@ -4,8 +4,8 @@ namespace MyFish.Brain.Moves
 {
     public class BishopMoves : SliderMoves<Bishop>
     {
-        public BishopMoves(Position position, Board board)
-            : base(position, board, Vector.NorthEast, Vector.SouthEast, Vector.NorthWest, Vector.SouthWest)
+        public BishopMoves(Position position, Board board, bool avoidCheck = true)
+            : base(position, board, avoidCheck, Vector.NorthEast, Vector.SouthEast, Vector.NorthWest, Vector.SouthWest)
         {
         }
     }

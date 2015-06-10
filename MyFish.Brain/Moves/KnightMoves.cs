@@ -11,8 +11,8 @@ namespace MyFish.Brain.Moves
             new Vector(1, 2), new Vector(-1, 2), new Vector(1, -2), new Vector(-1, -2)
         };
 
-        public KnightMoves(Position position, Board board)
-            : base(position, board)
+        public KnightMoves(Position position, Board board, bool avoidCheck = true)
+            : base(position, board, avoidCheck)
         {
         }
 
@@ -23,7 +23,7 @@ namespace MyFish.Brain.Moves
 
         public override IEnumerator<Move> GetEnumerator()
         {
-            return new KnightMoves(StartingPosition, Board);
+            return new KnightMoves(StartingPosition, Board, AvoidCheck);
         }
     }
 }
