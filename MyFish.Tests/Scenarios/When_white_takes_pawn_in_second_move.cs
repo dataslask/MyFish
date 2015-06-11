@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace MyFish.Tests.Scenarios
 {
     [TestFixture]
-    internal class After_white_takes_pawn_in_second_move : BoardScenario
+    internal class When_white_takes_pawn_in_second_move : BoardScenario
     {
         /* 8|r|n|b|q|k|b|n|r|
          * 7|p|p|p| |p|p|p|p|

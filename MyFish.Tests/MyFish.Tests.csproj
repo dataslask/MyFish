@@ -58,8 +58,10 @@
     <Compile Include="Helpers\MovesAttacsExtension.cs" />
     <Compile Include="Helpers\MovesJoinExtension.cs" />
     <Compile Include="Moves\KingMovesTests.cs" />
-    <Compile Include="Scenarios\After_white_takes_pawn_in_second_move.cs" />
+    <Compile Include="Scenarios\When_white_takes_pawn_in_second_move.cs" />
+    <Compile Include="Scenarios\When_black_is_under_check_in_move_5.cs" />
     <Compile Include="Scenarios\When_moving_white_knight_on_initial_board.cs" />
+    <Compile Include="Scenarios\When_white_is_check_mate_in_move_4.cs" />
     <Compile Include="Web\AutoMapper.cs" />
     <Compile Include="Web\AutoMapperTests.cs" />
     <Compile Include="Helpers\Expected.cs" />
