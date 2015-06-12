@@ -1,9 +1,12 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using MyFish.Brain;
-using MyFish.Web.Contracts.Commands;
+using MyFish.Brain.Moves;
 using Nancy;
 using Nancy.ModelBinding;
 using Board = MyFish.Brain.Board;
+using Move = MyFish.Brain.Move;
 
 namespace MyFish.Web
 {
@@ -17,25 +20,24 @@ namespace MyFish.Web
             Get["/init"] = _ =>
             {
                 _board = Fen.Init();
-                
-                return Response.AsJsonDto(_board);
-            };
 
-            Get["/fail"] = _ =>
-            {
-                throw new Exception("Shit!");
+                var dto = Mapper.Map<Contracts.Board>(_board);
+
+                return Response.AsJson(dto);
             };
 
             Post["/move"] = parameters =>
             {
-                var command = this.Bind<MoveCommand>();
+                var move = this.Bind<Contracts.Move>();
 
-                var piece = AutoMapper.Map<Contracts.Piece, Brain.Piece>(command.Piece);
-                var destination = AutoMapper.Map<Contracts.Position, Brain.Position>(command.Destination);
+                var piece = Mapper.Map<Piece>(move.Piece);
+                var destination = Mapper.Map<Position>(move.Destination);
 
                 _board = _board.Move(piece, destination);
 
-                return Response.AsJsonDto(_board);
+                var dto = Mapper.Map<Contracts.Board>(_board);
+
+                return Response.AsJson(dto);
             };
         }
     }

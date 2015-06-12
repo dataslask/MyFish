@@ -85,12 +85,10 @@
     <Compile Include="ApiModule.cs" />
     <Compile Include="AutoMapper.cs" />
     <Compile Include="Contracts\Board.cs" />
-    <Compile Include="Contracts\Commands\MoveCommand.cs" />
+    <Compile Include="Contracts\Move.cs" />
     <Compile Include="Contracts\Piece.cs" />
-    <Compile Include="Contracts\Position.cs" />
     <Compile Include="CustomJsonSerializer.cs" />
     <Compile Include="CustomNancyBootstrapper.cs" />
-    <Compile Include="AsJsonDtoResponseFormatterExtension.cs" />
     <Compile Include="ErrorResponse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

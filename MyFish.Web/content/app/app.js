@@ -34,40 +34,47 @@ app.controller('BoardController', ['$http', '_', function ($http, _) {
     function enumRanks() {
         return _.range(8, 0, -1);
     }
-    
-    function Piece(file, rank, piece) {
+
+    function Piece(file, rank, piece, moves) {
         var self = this;
-        self.file = file;
-        self.rank = rank;
         self.type = piece.type;
-        self.color = piece.color;
+        self.position = piece.position;
+        self.moves = moves[self.position];
+        self.canMove = function () {
+            return self.moves;
+        };
+        self.canMoveTo = function (destination) {
+            return self.moves && self.moves.indexOf(destination) >= 0;
+        };
     }
 
-    function Cell(file, rank, pieces) {
+    function Cell(file, rank, pieces, moves) {
         var self = this;
 
+        self.rank = rank;
         self.file = file;
-        self.rank = rank;
+        self.isBlack = (rank % 2 + file.charCodeAt()) % 2 == 0;
+        self.position = file + rank;
 
-        var piece = _.find(pieces, function(x) {
-            return x.position.file === file && x.position.rank === rank;
+        var piece = _.find(pieces, function (x) {
+            return x.position === self.position;
         });
-        self.piece = piece;
-        self.isBlack =  (rank % 2 + file.charCodeAt()) % 2 == 0;
+
+        self.piece = piece ? new Piece(file, rank, piece, moves) : null;
     }
 
-    function Row(rank, pieces) {
+    function Row(rank, pieces, moves) {
         var self = this;
 
         self.rank = rank;
-        self.columns = _.map(enumFiles(), function(file) {
-            return new Cell(file, rank, pieces);
+        self.columns = _.map(enumFiles(), function (file) {
+            return new Cell(file, rank, pieces, moves);
         });
     }
 
-    function makeRows(data) {
-        return _.map(enumRanks(), function(rank) {
-            return new Row(rank, data.pieces);
+    function makeRows(pieces, moves) {
+        return _.map(enumRanks(), function (rank) {
+            return new Row(rank, pieces, moves);
         });
     }
 
@@ -77,11 +84,15 @@ app.controller('BoardController', ['$http', '_', function ($http, _) {
 
     self.selectedPiece = null;
 
+    function updateBoard(data) {
+        self.rows = makeRows(data.pieces, data.moves);
+    }
+
     function movePiece(piece, destination) {
-        var moveCommand = { piece: piece, destination: destination };
-        $http.post("api/move", moveCommand).success(function(data, status) {
-            self.rows = makeRows(data);
-        }).error(function(data) {
+        var moveCommand = { piece: { type: piece.type, position: piece.position }, destination: destination };
+        $http.post("api/move", moveCommand).success(function (data) {
+            updateBoard(data);
+        }).error(function (data) {
             alert(data.message);
         });
     }
@@ -96,39 +107,41 @@ app.controller('BoardController', ['$http', '_', function ($http, _) {
         self.selectedPiece = piece;
     }
 
-    self.click = function(cell) {
+    self.click = function (cell) {
 
-        if (self.selectedPiece && (!cell.piece || cell.piece.color !== self.selectedPiece.color)) {
-            movePiece(self.selectedPiece, cell);
+        if (self.selectedPiece && self.selectedPiece.canMoveTo(cell.position)) {
+            movePiece(self.selectedPiece, cell.position);
             selectPiece(null);
         }
         else {
-            selectPiece(self.selectedPiece != cell.piece ? cell.piece : null);
+            selectPiece(self.selectedPiece != cell.piece && cell.piece && cell.piece.canMove() ? cell.piece : null);
         }
     };
 
     $http.get("api/init").success(function (data) {
-        self.rows = makeRows(data);
+        updateBoard(data);
+    }).error(function (data) {
+        alert(data.message);
     });
 }]);
 
 app.filter('piece', [function () {
     var map = {
-        'white-king': String.fromCharCode(9812),
-        'white-queen': String.fromCharCode(9813),
-        'white-rook': String.fromCharCode(9814),
-        'white-bishop': String.fromCharCode(9815),
-        'white-knight': String.fromCharCode(9816),
-        'white-pawn': String.fromCharCode(9817),
-        'black-king': String.fromCharCode(9818),
-        'black-queen': String.fromCharCode(9819),
-        'black-rook': String.fromCharCode(9820),
-        'black-bishop': String.fromCharCode(9821),
-        'black-knight': String.fromCharCode(9822),
-        'black-pawn': String.fromCharCode(9823)
+        'K': String.fromCharCode(9812),
+        'Q': String.fromCharCode(9813),
+        'R': String.fromCharCode(9814),
+        'B': String.fromCharCode(9815),
+        'N': String.fromCharCode(9816),
+        'P': String.fromCharCode(9817),
+        'k': String.fromCharCode(9818),
+        'q': String.fromCharCode(9819),
+        'r': String.fromCharCode(9820),
+        'b': String.fromCharCode(9821),
+        'n': String.fromCharCode(9822),
+        'p': String.fromCharCode(9823)
     };
     return function (piece) {
-        var key = piece != null ? piece.color + '-' + piece.type : null;
+        var key = piece != null ? piece.type : null;
         return map[key] || null;
     };
 }]);
