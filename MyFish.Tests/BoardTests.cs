@@ -64,5 +64,24 @@ namespace MyFish.Tests
             newBoard.Turn.Should().Be(Color.Black);
         }
 
+        [Test]
+        public void Should_set_enpassant_target_after_white_pawn_double_step()
+        {
+            var board = TestBoard.With("Pe2 Ke1");
+
+            var newBoard = board.Move("Pe2e4");
+
+            newBoard.EnPassantTarget.Should().Be((Position)"e3");
+        }
+
+        [Test]
+        public void Should_set_enpassant_target_after_black_pawn_double_step()
+        {
+            var board = TestBoard.With("pb7 ke8", null, Color.Black);
+
+            var newBoard = board.Move("pb7b5");
+
+            newBoard.EnPassantTarget.Should().Be((Position)"b6");
+        }
     }
 }

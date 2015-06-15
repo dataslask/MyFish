@@ -16,7 +16,7 @@ namespace MyFish.Web
         }
 
         public override async Task Invoke(IOwinContext context)
-        {            
+        {
             Console.WriteLine("[{0}] {1} {2}", Thread.CurrentThread.ManagedThreadId, context.Request.Method, context.Request.Uri);
 
             foreach (var header in context.Request.Headers)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyFish.Brain.Exceptions;
@@ -100,11 +101,40 @@ namespace MyFish.Brain
 
         internal Board Do(Move move)
         {
-            var pieces = Pieces.Where(x => x != move.Piece && x.Position != move.Destination);
+            var destination = GetPawnEnPassantDestination(move) ?? move.Destination;
+
+            var pieces = Pieces.Where(x => x != move.Piece && x.Position != destination);
 
             var movedPiece = move.Piece.Move(move.Destination);
 
-            return new Board(pieces.Concat(new[] { movedPiece }), NextTurn(), null);
+            var enPassantTarget = GetEnPassantTarget(move);
+
+            return new Board(pieces.Concat(new[] { movedPiece }), NextTurn(), enPassantTarget);
+        }
+
+        private Position GetPawnEnPassantDestination(Move move)
+        {
+            if (move.Piece is Pawn && EnPassantTarget == move.Destination)
+            {
+                var direction = Turn == Color.White ? -1 : 1;
+
+                return move.Destination + new Vector(0, direction);
+            }
+            return null;
+        }
+
+        private static Position GetEnPassantTarget(Move move)
+        {
+            if (move.Piece is Pawn)
+            {
+                var steps = move.Destination.Rank - move.Piece.Position.Rank;
+
+                if (Math.Abs(steps) == 2)
+                {
+                    return move.Piece.Position + new Vector(0, steps/2);
+                }
+            }
+            return null;
         }
 
         private Color NextTurn()

@@ -23,7 +23,7 @@ namespace MyFish.Web
         {
             using (var buffer = new MemoryStream())
             {
-                var bodyStream = context.Response.Body;
+                var responseStream = context.Response.Body;
 
                 context.Response.Body = buffer;
 
@@ -38,16 +38,26 @@ namespace MyFish.Web
 
                 buffer.Seek(0, SeekOrigin.Begin);
 
-                using (var reader = new StreamReader(buffer, true))
-                {
-                    var body = await reader.ReadToEndAsync();
-                    Console.WriteLine(body);
-                    Console.WriteLine();
+                await buffer.CopyToAsync(responseStream);
 
+                if (LogBody(context.Response.ContentType))
+                {
                     buffer.Seek(0, SeekOrigin.Begin);
-                    await buffer.CopyToAsync(bodyStream);
+
+                    using (var reader = new StreamReader(buffer, true))
+                    {
+                        var body = await reader.ReadToEndAsync();
+
+                        Console.WriteLine(body);
+                        Console.WriteLine();
+                    }
                 }
             }
+        }
+
+        private static bool LogBody(string contentType)
+        {
+            return contentType.Contains("application/json");
         }
     }
 }

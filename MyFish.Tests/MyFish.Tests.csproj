@@ -58,6 +58,7 @@
     <Compile Include="Helpers\MovesAttacsExtension.cs" />
     <Compile Include="Helpers\MovesJoinExtension.cs" />
     <Compile Include="Moves\KingMovesTests.cs" />
+    <Compile Include="Scenarios\When_black_pawn_becomes_enpassant_target.cs" />
     <Compile Include="Scenarios\When_white_takes_pawn_in_second_move.cs" />
     <Compile Include="Scenarios\When_black_is_under_check_in_move_5.cs" />
     <Compile Include="Scenarios\When_moving_white_knight_on_initial_board.cs" />
