@@ -43,7 +43,7 @@ namespace MyFish.Brain.Moves
 
         private bool EnPassantTargetAt(int x, int y)
         {
-            return Board.EnPassantTarget == StartingPosition + new Vector(x, y);
+            return Board.Turn == FriendlyColor && Board.EnPassantTarget == StartingPosition + new Vector(x, y);
         }
 
         private bool PieceAt(int x, int y)

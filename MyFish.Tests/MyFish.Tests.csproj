@@ -54,15 +54,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzers\MobilityAnalyzerTests.cs" />
+    <Compile Include="Analyzers\PieceValueAnalyzerTests.cs" />
     <Compile Include="BoardTests.cs" />
     <Compile Include="Helpers\MovesAttacsExtension.cs" />
     <Compile Include="Helpers\MovesJoinExtension.cs" />
+    <Compile Include="MemoizeTests.cs" />
     <Compile Include="Moves\KingMovesTests.cs" />
     <Compile Include="Scenarios\When_black_pawn_becomes_enpassant_target.cs" />
     <Compile Include="Scenarios\When_white_takes_pawn_in_second_move.cs" />
     <Compile Include="Scenarios\When_black_is_under_check_in_move_5.cs" />
     <Compile Include="Scenarios\When_moving_white_knight_on_initial_board.cs" />
     <Compile Include="Scenarios\When_white_is_check_mate_in_move_4.cs" />
+    <Compile Include="Analyzers\BoardAnalyzerTests.cs" />
     <Compile Include="Web\AutoMapper.cs" />
     <Compile Include="Web\AutoMapperTests.cs" />
     <Compile Include="Helpers\Expected.cs" />

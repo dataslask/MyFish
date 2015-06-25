@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MyFish.Brain.Exceptions;
 using MyFish.Brain.Moves;
 using MyFish.Brain.Pieces;
@@ -48,7 +47,28 @@ namespace MyFish.Brain
             return BlackPieces.OfType<T>();
         }
 
-        public Piece this[Position position] { get { return Pieces.SingleOrDefault(x => x.Position == position); } }
+        private Dictionary<Position, Piece> _indexedPieces;
+
+        public Piece this[Position position]
+        {
+            get
+            {
+                return LookupPiece(position);
+            }
+        }
+
+        private Piece LookupPiece(Position position)
+        {
+            if (_indexedPieces == null)
+            {
+                _indexedPieces = Pieces.ToDictionary(x => x.Position, x => x);
+            }
+            Piece piece;
+
+            _indexedPieces.TryGetValue(position, out piece);
+
+            return piece;
+        }
 
         private Board(IEnumerable<Piece> pieces, Color turn, Position enPassantTarget)
         {
@@ -131,7 +151,7 @@ namespace MyFish.Brain
 
                 if (Math.Abs(steps) == 2)
                 {
-                    return move.Piece.Position + new Vector(0, steps/2);
+                    return move.Piece.Position + new Vector(0, steps / 2);
                 }
             }
             return null;
@@ -140,6 +160,39 @@ namespace MyFish.Brain
         private Color NextTurn()
         {
             return Turn == Color.White ? Color.Black : Color.White;
+        }
+
+        private readonly Dictionary<object, object> _cache = new Dictionary<object, object>();
+
+        public Func<TArg, TResult> Memoize<TArg, TResult>(Func<TArg, TResult> func)
+        {
+            return arg =>
+            {
+                object result;
+
+                if (!_cache.TryGetValue(arg, out result))
+                {
+                    result = func(arg);
+
+                    _cache.Add(arg, result);
+                }
+
+                return (TResult)result;
+            };
+        }
+
+        public Func<TArg1, TArg2, TResult> Memoize<TArg1, TArg2, TResult>(Func<TArg1, TArg2, TResult> func)
+        {
+            Func<Tuple<TArg1, TArg2>, TResult> tupleFunc = arg => func(arg.Item1, arg.Item2);
+
+            return (arg1, arg2) => Memoize(tupleFunc)(Tuple.Create(arg1, arg2));
+        }
+
+        public Func<TArg1, TArg2, TArg3, TResult> Memoize<TArg1, TArg2, TArg3, TResult>(Func<TArg1, TArg2, TArg3, TResult> func)
+        {
+            Func<Tuple<TArg1, TArg2, TArg3>, TResult> tupleFunc = arg => func(arg.Item1, arg.Item2, arg.Item3);
+
+            return (arg1, arg2, arg3) => Memoize(tupleFunc)(Tuple.Create(arg1, arg2, arg3));
         }
     }
 }

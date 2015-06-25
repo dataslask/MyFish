@@ -91,8 +91,20 @@ namespace MyFish.Tests.Moves
         {
             var board = TestBoard.With("Pb3 Pa4 Pc4 pe6 pd5 pf5 Ke1 ke8");
 
-            new PawnMoves("b3", board).Should().NotContain(Expected.Moves("Pb3", "a4 c4"));
-            new PawnMoves("e6", board).Should().NotContain(Expected.Moves("pe6", "d5 f5"));
+            new PawnMoves("b3", board).Should().NotIntersectWith(Expected.Moves("Pb3", "a4 c4"));
+            new PawnMoves("e6", board).Should().NotIntersectWith(Expected.Moves("pe6", "d5 f5"));
+        }
+        
+        [Test]
+        public void Will_not_take_firendly_en_passant()
+        {
+            var board = Fen.Init().Move("Pe2e4");
+
+            var pawnMoves = new PawnMoves("d2", board).Concat(new PawnMoves("f2", board));
+            
+            var unxepectedMoves = Expected.Moves("Pd2", "e3").Concat(Expected.Moves("Pf2", "e3"));
+
+            pawnMoves.Should().NotIntersectWith(unxepectedMoves);
         }
 
         [Test]
@@ -106,18 +118,9 @@ namespace MyFish.Tests.Moves
         [Test]
         public void Can_take_opponent_en_passant_right()
         {
-            var board = TestBoard.With("pe4 Pf4 ke8", "f3");
+            var board = TestBoard.With("pe4 Pf4 ke8", "f3", Color.Black);
 
             new PawnMoves("e4", board).Should().Contain(Expected.Moves("pe4", "f3"));
-        }
-
-        [Test]
-        public void Does_not_include_moves_when_testing_for_attacks_only()
-        {
-            var board = TestBoard.With("Pb3 pa4 pc4 pe6 Pd5 Pf5 Ke1 ke8");
-
-            new PawnMoves("b3", board).Should().NotContain((Position)"b4");
-            new PawnMoves("e6", board).Should().NotContain((Position)"e5");
         }
 
         [Test]

@@ -5,7 +5,7 @@ namespace MyFish.Brain
 {
     public class Position
     {
-        public static readonly Position Invalid = new Position();
+        public static readonly Position Invalid = new Position('x', 9, false);
 
         public char File { get; private set; }
         public int Rank { get; private set; }
@@ -18,8 +18,15 @@ namespace MyFish.Brain
         {
         }
 
-        private Position() : this('x', 9, false)
+        private Position(char file, int rank, bool assertValid)
         {
+            File = file;
+            Rank = rank;
+
+            if (assertValid && !IsValid)
+            {
+                throw new ArgumentException(string.Format("Invalid position: {0}", this));
+            }
         }
 
         public static implicit operator Position(string position)
@@ -35,17 +42,6 @@ namespace MyFish.Brain
         public static Vector operator- (Position position, Position other)
         {
             return position.IsValid && other.IsValid? new Vector(position.File - other.File, position.Rank - other.Rank) : Vector.Invalid;
-        }
-
-        private Position(char file, int rank, bool assertValid)
-        {
-            File = file;
-            Rank = rank;
-
-            if (assertValid && !IsValid)
-            {
-                throw new ArgumentException(string.Format("Invalid position: {0}", this));
-            }
         }
 
         public bool IsValid

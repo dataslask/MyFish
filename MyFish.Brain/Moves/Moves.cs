@@ -20,6 +20,7 @@ namespace MyFish.Brain.Moves
         private static IEnumerable<Move> MovesFor(this Board board, Piece piece, bool avoidCheck)
         {
             return Factory[piece.Type](piece.Position, board, avoidCheck);
+            //return board.Memoize(Factory[piece.Type])(piece.Position, board, avoidCheck);
         }
 
         public static IEnumerable<Move> MovesFor(this Board board, Piece piece)

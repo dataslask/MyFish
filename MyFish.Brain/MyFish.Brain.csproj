@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzers\MobilityAnalyzer.cs" />
+    <Compile Include="Analyzers\PieceValueAnalyzer.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Castle.cs" />
     <Compile Include="Color.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Pieces\Rook.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Analyzers\BoardAnalyzer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
