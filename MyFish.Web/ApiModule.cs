@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using MyFish.Brain;
+using MyFish.Brain.Analyzers;
 using MyFish.Brain.Moves;
 using Nancy;
 using Nancy.ModelBinding;
@@ -22,6 +23,15 @@ namespace MyFish.Web
                 _board = Fen.Init();
 
                 var dto = Mapper.Map<Contracts.Board>(_board);
+
+                return Response.AsJson(dto);
+            };
+
+            Get["/suggestMove"] = _ =>
+            {
+                var suggestedMove = _board.SuggestMove();
+
+                var dto = Mapper.Map<Contracts.Move>(suggestedMove);
 
                 return Response.AsJson(dto);
             };

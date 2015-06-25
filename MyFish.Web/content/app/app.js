@@ -85,16 +85,40 @@ app.controller('BoardController', ['$http', '_', function ($http, _) {
     self.selectedPiece = null;
 
     function updateBoard(data) {
+        self.turn = data.turn;
         self.rows = makeRows(data.pieces, data.moves);
     }
 
-    function movePiece(piece, destination) {
-        var moveCommand = { piece: { type: piece.type, position: piece.position }, destination: destination };
-        $http.post("api/move", moveCommand).success(function (data) {
+    function suggestMove(callback) {
+        $http.get("api/suggestMove").success(callback).error(function (data) {
+            alert(data.message);
+        });
+    }
+
+    self.suggestMove = function () {
+        suggestMove(function(data) {
+            self.suggestedMove = data;
+        });
+    };
+
+    function executeMove(move) {
+        $http.post("api/move", move).success(function (data) {
             updateBoard(data);
+            self.autoMove();
         }).error(function (data) {
             alert(data.message);
         });
+    }
+
+    self.autoMove = function () {
+        if (self.mode === 'computer' || (self.turn === 'black' && self.mode === 'white') || (self.turn === 'white' && self.mode === 'black')) {
+            suggestMove(executeMove);
+        }
+    };
+
+    function movePiece(piece, destination) {
+        var move = { piece: { type: piece.type, position: piece.position }, destination: destination };
+        executeMove(move);
     }
 
     function selectPiece(piece) {
@@ -117,6 +141,8 @@ app.controller('BoardController', ['$http', '_', function ($http, _) {
             selectPiece(self.selectedPiece != cell.piece && cell.piece && cell.piece.canMove() ? cell.piece : null);
         }
     };
+
+    self.mode = 'white';
 
     $http.get("api/init").success(function (data) {
         updateBoard(data);

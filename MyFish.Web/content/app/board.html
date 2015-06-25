@@ -11,4 +11,12 @@
             <td ng-repeat="file in board.enumFiles" class="legend">{{file}}</td>
         </tr>
     </table>
+    <span>Turn: {{board.turn}}</span>
+    <button ng-click="board.suggestMove()">Suggest move</button>{{board.suggestedMove}}
+    <div>
+        <label><input type="radio" value="computer" ng-model="board.mode" ng-change="board.autoMove()" /> Computer plays both</label>
+        <label><input type="radio" value="white" ng-model="board.mode" ng-change="board.autoMove()" />I play white</label>
+        <label><input type="radio" value="black" ng-model="board.mode" ng-change="board.autoMove()" />I play black</label>
+        <label><input type="radio" value="human" ng-model="board.mode" ng-change="board.autoMove()" />Human vs Human</label>
+    </div>
 </div>
